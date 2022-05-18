@@ -1,7 +1,7 @@
-package model;
+package com.model;
 
 import java.time.LocalDateTime;
 
 public class Schedule {
-    LocalDateTime time;
+    private LocalDateTime time;
 }
