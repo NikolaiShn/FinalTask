@@ -1,7 +1,9 @@
 package com.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Schedule {
-    private LocalDateTime time;
+    private Long id;
+    private List<LocalDateTime> time;
 }

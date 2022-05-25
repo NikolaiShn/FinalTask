@@ -10,11 +10,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     protected Class<?>[] getRootConfigClasses() {
 // AppConfig defines beans that would be in root-context.xml
-        return new Class[] {AnnotationWebConfig.class, WebSecurityConfig.class};
+        return new Class[] {WebSecurityConfig.class};
     }
     protected Class<?>[] getServletConfigClasses() {
 // WebConfig defines beans that would be in servlet.xml
-        return new Class[] {WebConfig.class};
+        return null;
     }
     protected String[] getServletMappings() {
         return new String[] {"/"};

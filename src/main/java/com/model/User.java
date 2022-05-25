@@ -1,27 +1,25 @@
 package com.model;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 
-@RequiredArgsConstructor
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @NonNull
+    private Long id;
     @Column
     private String login;
     @Column
     private String password;
     @Column
     private String role;
+
+    private Profile profile;
 }

@@ -12,21 +12,8 @@
     <dependencies>
             <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring-webmvc.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>5.3.18</version>
-                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -48,20 +35,13 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>2.6.3</version>
-            </dependency>
-
-            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>4.0.1</version>
                 <scope>provided</scope>
             </dependency>
 
-
-            <dependency>
+        <dependency>
                     <groupId>javax.servlet</groupId>
                     <artifactId>jstl</artifactId>
                     <version>1.2</version>
@@ -81,22 +61,15 @@
             </dependency>
 
             <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>8.0</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>0.9.1</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
                 <version>5.6.5.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>2.6.3</version>
             </dependency>
 
             <dependency>
@@ -130,7 +103,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <port>8888</port>
+                    <port>8080</port>
                     <path>/</path>
                 </configuration>
             </plugin>
@@ -139,7 +112,6 @@
     </build>
 
     <properties>
-        <spring.version>5.3.17</spring.version>
         <spring-webmvc.version>5.3.17</spring-webmvc.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

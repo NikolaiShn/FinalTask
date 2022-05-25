@@ -4,9 +4,10 @@ import java.util.List;
 
 public class Course {
     private Integer id;
-    private String name;
-    private List<Lesson> lessons;
+    private String courseName;
+    private List<Long> lessonsId;
+    //scheduleId
     private Schedule schedule;
-    private String review;
+    private List<Long> reviewIds;
     private Double cost;
 }

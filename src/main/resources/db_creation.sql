@@ -3,7 +3,7 @@ USE ExchangeService;
 
 CREATE TABLE IF NOT EXISTS Users(
 id int PRIMARY KEY AUTO_INCREMENT,
-login varchar(50) NOT NULL,
+login varchar(50) NOT NULL UNIQUE,
 password varchar(255) NOT NULL,
 role varchar(50) NOT NULL
 );
@@ -49,8 +49,8 @@ role varchar(50) NOT NULL
 --FOREIGN KEY (person_id) REFERENCES Persons(id)
 --);
 
-INSERT INTO Users(login, password, role) VALUES ("testuser", "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1MDEyMDAwNCwiaWF0IjoxNjUwMTIwMDA0fQ.oknohD4e5JUSHEPK6cvtSEUtMhRhvYQCnAHLuOCT2NQ", "ROLE_USER");
-INSERT INTO Users(login, password, role) VALUES ("admin", "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1MDEyMDAwNCwiaWF0IjoxNjUwMTIwMDA0fQ.oknohD4e5JUSHEPK6cvtSEUtMhRhvYQCnAHLuOCT2NQ", "ROLE_ADMIN");
+INSERT INTO Users(login, password, role) VALUES ("testuser", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_USER");
+INSERT INTO Users(login, password, role) VALUES ("admin", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_ADMIN");
 --
 --INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Валерий", "Пупкин", '1987-02-03', "юрист") ;
 --INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Юрий", "Иванов", '1972-09-07', "водитель") ;

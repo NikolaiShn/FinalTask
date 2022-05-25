@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @ComponentScan("com.web")
@@ -18,5 +20,14 @@ public class AnnotationWebConfig {
         sessionFactory.setConfigLocation(new ClassPathResource("hibernate.cfg.xml"));
         sessionFactory.setPackagesToScan("com.model");
         return sessionFactory;
+    }
+
+    @Bean(name = "transactionManager")
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                sessionFactory().getObject());
+        return transactionManager;
     }
 }

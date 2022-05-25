@@ -4,10 +4,12 @@
         "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        <property name="show_sql">true</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ExchangeService</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">adminsenla</property>
+        <property name="hibernate.id.new_generator_mappings">false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <!--        <mapping resource="User.hbm.xml" />-->
     </session-factory>
