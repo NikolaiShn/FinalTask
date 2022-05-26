@@ -39,6 +39,7 @@ public class UserService implements UserDetailsService {
                 authorities);
     }
 
+    //TODO добавить создание профиля
     public boolean registerUser(String username, String password, String role) throws UserExistException {
         if(userRepository.findByLogin(username) != null) {
             throw new UserExistException("такой пользователь существует");

@@ -21,5 +21,5 @@ public class User {
     @Column
     private String role;
 
-    private Profile profile;
+    //private Profile profile;
 }

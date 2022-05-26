@@ -1,81 +1,241 @@
 CREATE DATABASE IF NOT EXISTS ExchangeService CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE ExchangeService;
 
+CREATE TABLE IF NOT EXISTS Profiles(
+id int PRIMARY KEY AUTO_INCREMENT,
+name varchar(255) NOT NULL,
+lastName varchar(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Users(
 id int PRIMARY KEY AUTO_INCREMENT,
-login varchar(50) NOT NULL UNIQUE,
+login varchar(50) UNIQUE NOT NULL,
 password varchar(255) NOT NULL,
-role varchar(50) NOT NULL
+role varchar(50) NOT NULL,
+profile_id int UNIQUE NOT NULL,
+FOREIGN KEY (profile_id) REFERENCES Profiles(id)
 );
---
---CREATE TABLE IF NOT EXISTS Rooms(
---id int PRIMARY KEY AUTO_INCREMENT,
---cost double NOT NULL,
---number int NOT NULL UNIQUE,
---capacity int NOT NULL,
---roomState varchar(20) NOT NULL,
---stars int NOT NULL
---);
---
---CREATE TABLE IF NOT EXISTS Services(
---id int PRIMARY KEY AUTO_INCREMENT,
---cost double NOT NULL,
---description varchar(200) NOT NULL UNIQUE
---);
---
---CREATE TABLE IF NOT EXISTS OrderRooms(
---id int PRIMARY KEY AUTO_INCREMENT,
---room_id int NOT NULL,
---person_id int NOT NULL,
---plannedSettleDate timestamp NOT NULL,
---actualSettleDate timestamp,
---plannedEvictDate timestamp NOT NULL,
---actualEvictDate timestamp,
---orderState varchar(20) NOT NULL,
---FOREIGN KEY (room_id) REFERENCES Rooms(id),
---FOREIGN KEY (person_id) REFERENCES Persons(id)
---);
---
---CREATE TABLE IF NOT EXISTS OrderServices(
---id int PRIMARY KEY AUTO_INCREMENT,
---service_id int NOT NULL,
---person_id int NOT NULL,
---plannedSettleDate timestamp NOT NULL,
---actualSettleDate timestamp,
---plannedEvictDate timestamp NOT NULL,
---actualEvictDate timestamp,
---orderState varchar(20) NOT NULL,
---FOREIGN KEY (service_id) REFERENCES Services(id),
---FOREIGN KEY (person_id) REFERENCES Persons(id)
---);
 
-INSERT INTO Users(login, password, role) VALUES ("testuser", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_USER");
-INSERT INTO Users(login, password, role) VALUES ("admin", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_ADMIN");
---
---INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Валерий", "Пупкин", '1987-02-03', "юрист") ;
---INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Юрий", "Иванов", '1972-09-07', "водитель") ;
---INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Сергей", "Пчёлкин", '1988-08-07', "пчеловод") ;
---INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Дмитрий", "Пупкин", '2000-08-09', "студент") ;
---INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Виктор", "Смолов", '1996-04-03', "менеджер") ;
---INSERT INTO Persons (name, lastName, dateOfBirth, otherInfo) VALUES ("Евгений", "Иванчик", '1988-03-03', "бухгалтер") ;
---
---INSERT INTO Rooms (cost, number, capacity, roomState, stars) VALUES (30.0, 1, 3, "BOOKED", 5) ;
---INSERT INTO Rooms (cost, number, capacity, roomState, stars) VALUES (25.0, 2, 2, "REPAIRED", 4);
---INSERT INTO Rooms (cost, number, capacity, roomState, stars) VALUES (50.0, 3, 3, "BOOKED", 5) ;
---INSERT INTO Rooms (cost, number, capacity, roomState, stars) VALUES (55.0, 25, 2, "BOOKED", 5);
---INSERT INTO Rooms (cost, number, capacity, roomState, stars) VALUES (34.0, 5, 3, "EMPTY", 4);
---
---INSERT INTO Services (cost, description) VALUES (5.0, "завтрак");
---INSERT INTO Services (cost, description) VALUES (7.0, "обед");
---INSERT INTO Services (cost, description) VALUES (6.0, "ужин");
---INSERT INTO Services (cost, description) VALUES (10.0, "экскурсия в музей");
---
---INSERT INTO OrderRooms (room_id, person_id, plannedSettleDate, actualSettleDate, plannedEvictDate, actualEvictDate, orderState) VALUES (1, 1, '2022-04-15T12:20', null, '2022-04-19T12:20', null, "NEW");
---INSERT INTO OrderRooms (room_id, person_id, plannedSettleDate, actualSettleDate, plannedEvictDate, actualEvictDate, orderState) VALUES (3, 2, '2022-03-14T12:20', null, '2022-03-24T12:20', null, "NEW");
---INSERT INTO OrderRooms (room_id, person_id, plannedSettleDate, actualSettleDate, plannedEvictDate, actualEvictDate, orderState) VALUES (4, 3, '2022-05-01T20:00', null, '2022-05-07T13:00', null, "NEW");
---INSERT INTO OrderRooms (room_id, person_id, plannedSettleDate, actualSettleDate, plannedEvictDate, actualEvictDate, orderState) VALUES (4, 3, '2022-06-01T20:00', null, '2022-08-07T13:00', null, "NEW");
---
---INSERT INTO OrderServices (service_id, person_id, plannedSettleDate, actualSettleDate, plannedEvictDate, actualEvictDate, orderState) VALUES (1, 2, '2022-03-14T15:20', null, '2022-03-14T16:20', null, "NEW");
---INSERT INTO OrderServices (service_id, person_id, plannedSettleDate, actualSettleDate, plannedEvictDate, actualEvictDate, orderState) VALUES (2, 3, '2022-05-01T21:00', null, '2022-05-01T22:00', null, "NEW");
+CREATE TABLE IF NOT EXISTS Lessons(
+id int PRIMARY KEY AUTO_INCREMENT,
+name varchar(255),
+description varchar(255),
+cost varchar(255)
+);
+
+CREATE TABLE IF NOT EXISTS KnowledgeDirectories(
+id int PRIMARY KEY AUTO_INCREMENT,
+name varchar(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Themes(
+id int PRIMARY KEY AUTO_INCREMENT,
+themeName varchar(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Sections(
+id int PRIMARY KEY AUTO_INCREMENT,
+sectionName varchar(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Schedules(
+id int PRIMARY KEY AUTO_INCREMENT
+);
+
+CREATE TABLE IF NOT EXISTS ProfileKnowledgeDirectories(
+id int PRIMARY KEY AUTO_INCREMENT,
+profile_id int NOT NULL,
+knowledgedirectory_id int NOT NULL,
+FOREIGN KEY (profile_id) REFERENCES Profiles(id),
+FOREIGN KEY (knowledgedirectory_id) REFERENCES KnowledgeDirectories(id)
+);
+
+CREATE TABLE IF NOT EXISTS LessonsReviews(
+id int PRIMARY KEY AUTO_INCREMENT,
+lesson_id int NOT NULL,
+text varchar(255),
+FOREIGN KEY (lesson_id) REFERENCES Lessons(id)
+);
+
+CREATE TABLE IF NOT EXISTS KnowledgeDirectoriesThemes(
+id int PRIMARY KEY AUTO_INCREMENT,
+knowledgedirectory_id int NOT NULL,
+theme_id int NOT NULL,
+FOREIGN KEY (knowledgedirectory_id) REFERENCES KnowledgeDirectories(id),
+FOREIGN KEY (theme_id) REFERENCES Themes(id)
+);
+
+CREATE TABLE IF NOT EXISTS KnowledgeDirectoriesSections(
+id int PRIMARY KEY AUTO_INCREMENT,
+knowledgedirectory_id int NOT NULL,
+section_id int NOT NULL,
+FOREIGN KEY (knowledgedirectory_id) REFERENCES KnowledgeDirectories(id),
+FOREIGN KEY (section_id) REFERENCES Sections(id)
+);
+
+CREATE TABLE IF NOT EXISTS Courses(
+id int PRIMARY KEY AUTO_INCREMENT,
+name varchar(255) UNIQUE NOT NULL,
+schedule_id int NOT NULL,
+cost double NOT NULL,
+FOREIGN KEY (schedule_id) REFERENCES Schedules(id)
+);
+
+CREATE TABLE IF NOT EXISTS CourseReviews(
+id int PRIMARY KEY AUTO_INCREMENT,
+course_id int NOT NULL,
+text varchar(255) NOT NULL,
+FOREIGN KEY (course_id) REFERENCES Courses(id)
+);
+
+CREATE TABLE IF NOT EXISTS CourseLessons(
+id int PRIMARY KEY AUTO_INCREMENT,
+lesson_id int NOT NULL,
+course_id int NOT NULL,
+FOREIGN KEY (course_id) REFERENCES Courses(id),
+FOREIGN KEY (lesson_id) REFERENCES Lessons(id)
+);
+
+CREATE TABLE IF NOT EXISTS ProfileCourses(
+id int PRIMARY KEY AUTO_INCREMENT,
+profile_id int NOT NULL,
+course_id int NOT NULL,
+FOREIGN KEY (profile_id) REFERENCES Profiles(id),
+FOREIGN KEY (course_id) REFERENCES Courses(id)
+);
+
+CREATE TABLE IF NOT EXISTS SchedulesDates(
+id int PRIMARY KEY AUTO_INCREMENT,
+schedule_id int NOT NULL,
+date timestamp NOT NULL,
+FOREIGN KEY (schedule_id) REFERENCES Schedules(id)
+);
+
+//Заполнение таблиц
+
+//пароль password у всех юзеров
+
+INSERT INTO Profiles(name, lastName) VALUES ("ivan", "pupkin");
+INSERT INTO Profiles(name, lastName) VALUES ("vitaly", "pupkin");
+INSERT INTO Profiles(name, lastName) VALUES ("kirill", "pupkin");
+INSERT INTO Profiles(name, lastName) VALUES ("artyom", "pupkin");
+INSERT INTO Profiles(name, lastName) VALUES ("evgeniy", "pupkin");
+
+INSERT INTO Users(login, password, role, profile_id) VALUES ("testuser", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_USER", 1);
+INSERT INTO Users(login, password, role, profile_id) VALUES ("admin1", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_ADMIN", 2);
+INSERT INTO Users(login, password, role, profile_id) VALUES ("admin2", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_ADMIN", 3);
+INSERT INTO Users(login, password, role, profile_id) VALUES ("admin3", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_ADMIN", 4);
+INSERT INTO Users(login, password, role, profile_id) VALUES ("admin4", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ROLE_ADMIN", 5);
+
+INSERT INTO KnowledgeDirectories(name) VALUES ("литература");
+INSERT INTO KnowledgeDirectories(name) VALUES ("математика");
+INSERT INTO KnowledgeDirectories(name) VALUES ("физика");
+
+INSERT INTO Themes(themeName) VALUES ("Булгаков");
+INSERT INTO Themes(themeName) VALUES ("Горький");
+INSERT INTO Themes(themeName) VALUES ("Куприн");
+
+INSERT INTO Themes(themeName) VALUES ("стереометрия");
+INSERT INTO Themes(themeName) VALUES ("планиметрия");
+INSERT INTO Themes(themeName) VALUES ("производные");
+
+INSERT INTO Themes(themeName) VALUES ("электричество");
+INSERT INTO Themes(themeName) VALUES ("движение");
+
+INSERT INTO Sections(sectionName) VALUES ("механика");
+INSERT INTO Sections(sectionName) VALUES ("русская");
+INSERT INTO Sections(sectionName) VALUES ("греческая");
+INSERT INTO Sections(sectionName) VALUES ("геометрия");
+
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (1, 1);
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (1, 2);
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (1, 3);
+
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (2, 4);
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (2, 5);
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (2, 6);
+
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (3, 7);
+INSERT INTO KnowledgeDirectoriesThemes(knowledgedirectory_id, theme_id) VALUES (3, 8);
+
+INSERT INTO KnowledgeDirectoriesSections(knowledgedirectory_id, section_id) VALUES (1, 2);
+INSERT INTO KnowledgeDirectoriesSections(knowledgedirectory_id, section_id) VALUES (1, 3);
+INSERT INTO KnowledgeDirectoriesSections(knowledgedirectory_id, section_id) VALUES (2, 4);
+INSERT INTO KnowledgeDirectoriesSections(knowledgedirectory_id, section_id) VALUES (3, 1);
+
+INSERT INTO ProfileKnowledgeDirectories(profile_id, knowledgedirectory_id) VALUES (1, 1);
+INSERT INTO ProfileKnowledgeDirectories(profile_id, knowledgedirectory_id) VALUES (2, 2);
+INSERT INTO ProfileKnowledgeDirectories(profile_id, knowledgedirectory_id) VALUES (3, 3);
+
+INSERT INTO Lessons(name, description, cost) VALUES ("урок1", "датадата" 10.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок2", "датадата" 11.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок3", "датадата" 12.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок4", "датадата" 13.0);
+
+INSERT INTO LessonsReviews(lesson_id, text) VALUES (1, "5 звёзд");
+INSERT INTO LessonsReviews(lesson_id, text) VALUES (2, "пушка");
+INSERT INTO LessonsReviews(lesson_id, text) VALUES (3, "втф");
+INSERT INTO LessonsReviews(lesson_id, text) VALUES (4, "серьёзно");
+
+INSERT INTO Schedules() VALUES();
+INSERT INTO Schedules() VALUES();
+INSERT INTO Schedules() VALUES();
+INSERT INTO Schedules() VALUES();
+
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (1,'2022-06-05T12:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (1,'2022-06-05T13:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (1,'2022-06-05T14:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (1,'2022-06-05T15:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (1,'2022-06-05T16:00');
+
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (2,'2022-06-05T08:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (2,'2022-06-05T09:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (2,'2022-06-05T10:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (2,'2022-06-05T11:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (2,'2022-06-05T12:00');
+
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (3,'2022-06-05T13:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (3,'2022-06-05T14:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (3,'2022-06-05T15:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (3,'2022-06-05T16:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (3,'2022-06-05T17:00');
+
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (4,'2022-06-05T09:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (4,'2022-06-05T10:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (4,'2022-06-05T11:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (4,'2022-06-05T12:00');
+INSERT INTO SchedulesDates(schedule_id, date) VALUES (4,'2022-06-05T13:00');
+
+INSERT INTO Courses(name, schedule_id, cost) VALUES ("КурсКниги", 1, 40.0);
+INSERT INTO Courses(name, schedule_id, cost) VALUES ("КурсПи", 2, 40.0);
+INSERT INTO Courses(name, schedule_id, cost) VALUES ("КурсПрироды", 3, 40.0);
+
+INSERT INTO CourseReviews(course_id, text) VALUES (1, "отличный курс");
+INSERT INTO CourseReviews(course_id, text) VALUES (2, "такое себе как по мне");
+INSERT INTO CourseReviews(course_id, text) VALUES (3, "*****");
+
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (1, 1);
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (2, 1);
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (3, 1);
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (4, 1);
+
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (1, 2);
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (2, 2);
+
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (1, 3);
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (2, 3);
+INSERT INTO CourseLessons(lesson_id, course_id) VALUES (3, 3);
+
+INSERT INTO ProfileCourses(profile_id, course_id) VALUES (1, 1);
+INSERT INTO ProfileCourses(profile_id, course_id) VALUES (2, 2);
+INSERT INTO ProfileCourses(profile_id, course_id) VALUES (3, 1);
+INSERT INTO ProfileCourses(profile_id, course_id) VALUES (4, 3);
+
+
+
+
+
+
+
 
 
