@@ -167,10 +167,10 @@ INSERT INTO ProfileKnowledgeDirectories(profile_id, knowledgedirectory_id) VALUE
 INSERT INTO ProfileKnowledgeDirectories(profile_id, knowledgedirectory_id) VALUES (2, 2);
 INSERT INTO ProfileKnowledgeDirectories(profile_id, knowledgedirectory_id) VALUES (3, 3);
 
-INSERT INTO Lessons(name, description, cost) VALUES ("урок1", "датадата" 10.0);
-INSERT INTO Lessons(name, description, cost) VALUES ("урок2", "датадата" 11.0);
-INSERT INTO Lessons(name, description, cost) VALUES ("урок3", "датадата" 12.0);
-INSERT INTO Lessons(name, description, cost) VALUES ("урок4", "датадата" 13.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок1", "датадата", 10.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок2", "датадата", 11.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок3", "датадата", 12.0);
+INSERT INTO Lessons(name, description, cost) VALUES ("урок4", "датадата", 13.0);
 
 INSERT INTO LessonsReviews(lesson_id, text) VALUES (1, "5 звёзд");
 INSERT INTO LessonsReviews(lesson_id, text) VALUES (2, "пушка");
