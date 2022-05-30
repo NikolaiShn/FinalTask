@@ -9,13 +9,13 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "themes")
-public class Theme {
+@Entity(name = "course_reviews")
+public class CourseReview {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
-    @Column(name = "theme_name")
-    private String themeName;
+    @Column
+    private String text;
     @ManyToOne
-    private KnowledgeDirectory knowledgeDirectory;
+    private Course course;
 }

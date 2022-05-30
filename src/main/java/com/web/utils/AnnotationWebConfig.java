@@ -22,12 +22,12 @@ public class AnnotationWebConfig {
         return sessionFactory;
     }
 
-    @Bean(name = "transactionManager")
-    public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager
-                = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(
-                sessionFactory().getObject());
-        return transactionManager;
-    }
+//    @Bean(name = "transactionManager")
+//    public PlatformTransactionManager transactionManager() {
+//        JpaTransactionManager transactionManager
+//                = new JpaTransactionManager();
+//        transactionManager.setEntityManagerFactory(
+//                sessionFactory().getObject());
+//        return transactionManager;
+//    }
 }

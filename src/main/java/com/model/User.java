@@ -3,6 +3,8 @@ package com.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -19,7 +21,14 @@ public class User {
     @Column
     private String password;
     @Column
-    private String role;
-
-    //private Profile profile;
+    private String name;
+    @Column
+    private String lastName;
+    @ManyToOne
+    @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "users_ibfk_1"))
+    private Role role;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<KnowledgeDirectory> knowledgeDirectories = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Course> courses = new ArrayList<>();
 }
