@@ -1,4 +1,4 @@
-package com.web.services;
+package com.web.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

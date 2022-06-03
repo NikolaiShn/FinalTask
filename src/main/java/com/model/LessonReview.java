@@ -1,6 +1,7 @@
 package com.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ public class LessonReview {
     private Long id;
     @Column
     private String text;
+    @ToString.Exclude
     @ManyToOne
     private Lesson lesson;
 }

@@ -3,6 +3,8 @@ package com.web.services;
 import com.exceptions.NotFoundException;
 import com.exceptions.UserExistException;
 import com.model.User;
+import com.web.dao.RoleRepository;
+import com.web.dao.UserRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +22,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     public User getUserByLogin(String login) throws NotFoundException {
         User user = userRepository.findByLogin(login);
         if (user != null) {
@@ -34,13 +39,12 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         User user = getUserByLogin(username);
         ArrayList<GrantedAuthority> authorities = new ArrayList();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getRole()));
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),
                 authorities);
     }
 
-    //TODO добавить создание профиля
-    public boolean registerUser(String username, String password, String role) throws UserExistException {
+    public boolean registerUser(String username, String password, String role, String name, String lastName) throws UserExistException {
         if(userRepository.findByLogin(username) != null) {
             throw new UserExistException("такой пользователь существует");
         } else {
@@ -48,8 +52,10 @@ public class UserService implements UserDetailsService {
             User user = new User();
             user.setLogin(username);
             user.setPassword(bCryptPasswordEncoder.encode(password));
+            user.setName(name);
+            user.setLastName(lastName);
             String fullNameRole = "ROLE_" + role;
-            user.setRole(fullNameRole);
+            user.setRole(roleRepository.findByRole(fullNameRole));
             userRepository.save(user);
             return true;
         }

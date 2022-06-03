@@ -19,7 +19,7 @@ public class RegistrationController {
     @ResponseBody
     public User admin(@RequestParam String login) {
         UserDetails userDetails = userService.loadUserByUsername(login);
-        return new User(2L, userDetails.getUsername(), "sdsds", "lll");
+        return new User();
     }
 
     @GetMapping(value = "/")
@@ -33,8 +33,8 @@ public class RegistrationController {
     }
 
     @PostMapping(value = "/registration", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String registration(@ModelAttribute("username") String username, @ModelAttribute("password") String password, @ModelAttribute("role") String role) throws UserExistException {
-        userService.registerUser(username, password, role);
+    public String registration(@ModelAttribute("username") String username, @ModelAttribute("password") String password, @ModelAttribute("role") String role, @ModelAttribute("name") String name, @ModelAttribute("lastName") String lastName) throws UserExistException {
+        userService.registerUser(username, password, role, name, lastName);
         return "index";
     }
 }

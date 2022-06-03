@@ -1,15 +1,25 @@
 package com.model;
 
+import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "knowledge_directories")
+@Data
+@Entity
+@Table(name = "knowledge_directories")
 public class KnowledgeDirectory {
     @Id
     @GeneratedValue
     private Long id;
+    @Column
+    private String name;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "knowledgeDirectory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Theme> themes;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "knowledgeDirectory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections;
 

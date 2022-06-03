@@ -3,6 +3,7 @@ package com.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class CourseReview {
     private Long id;
     @Column
     private String text;
+    @ToString.Exclude
     @ManyToOne
     private Course course;
 }

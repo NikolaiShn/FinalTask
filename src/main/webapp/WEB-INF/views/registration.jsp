@@ -15,6 +15,8 @@
            <option value="ADMIN">ADMIN</option>
            <option value="USER">USER</option>
          </select>
+         <input name="name" type="text", placeholder="Name">
+         <input name="lastName" type="text", placeholder="LastName">
          <button type="submit">Зарегистрироваться</button>
        </form>
     </div>

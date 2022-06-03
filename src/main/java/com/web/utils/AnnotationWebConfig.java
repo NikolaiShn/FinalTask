@@ -11,7 +11,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @ComponentScan("com.web")
-@EnableJpaRepositories("com.web.services")
+@EnableJpaRepositories(basePackages = "com.web", transactionManagerRef = "transactionManager")
 public class AnnotationWebConfig {
 
     @Bean(name = "entityManagerFactory")
@@ -22,12 +22,12 @@ public class AnnotationWebConfig {
         return sessionFactory;
     }
 
-//    @Bean(name = "transactionManager")
-//    public PlatformTransactionManager transactionManager() {
-//        JpaTransactionManager transactionManager
-//                = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(
-//                sessionFactory().getObject());
-//        return transactionManager;
-//    }
+    @Bean(name = "transactionManager")
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager
+                = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                sessionFactory().getObject());
+        return transactionManager;
+    }
 }

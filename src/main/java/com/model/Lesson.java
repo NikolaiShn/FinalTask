@@ -3,6 +3,7 @@ package com.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,6 +38,7 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "lesson_form_id", foreignKey = @ForeignKey(name = "lessons_ibfk_2"))
     private LessonForm lessonForm;
+    @ToString.Exclude
     @ManyToOne
     private Course course;
 

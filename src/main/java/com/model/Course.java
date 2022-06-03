@@ -1,9 +1,12 @@
 package com.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity(name = "courses")
 public class Course {
     @Id
