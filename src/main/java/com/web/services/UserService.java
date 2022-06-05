@@ -1,8 +1,15 @@
 package com.web.services;
 
+import com.dto.CourseDto;
+import com.dto.LessonDto;
+import com.dto.mappers.CourseMapper;
+import com.dto.mappers.LessonMapper;
 import com.exceptions.NotFoundException;
 import com.exceptions.UserExistException;
+import com.model.Course;
+import com.model.Lesson;
 import com.model.User;
+import com.web.controllers.AuthenticationFacade;
 import com.web.dao.RoleRepository;
 import com.web.dao.UserRepository;
 import lombok.SneakyThrows;
@@ -14,14 +21,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Component
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private AuthenticationFacade authenticationFacade;
     @Autowired
     private RoleRepository roleRepository;
 
@@ -32,6 +43,44 @@ public class UserService implements UserDetailsService {
         } else {
             throw new NotFoundException("такого юзера не существует");
         }
+    }
+
+    @Transactional
+    public List<LessonDto> getCurrentUserAccessibleLessons() {
+        String login = authenticationFacade.getAuthentication().getName();
+        List<Course> userCourses = userRepository.findCoursesByUserFetch(userRepository.findByLogin(login));
+        List<Lesson> lessons = new ArrayList<>();
+        for (Course course : userCourses) {
+            lessons.addAll(userRepository.findLessonsByCourseFetch(course.getCourseName()));
+        }
+        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessons);
+    }
+
+    @Transactional
+    public List<CourseDto> getCurrentUserAccessibleCourses() {
+
+        String login = authenticationFacade.getAuthentication().getName();
+        return CourseMapper.INSTANCE.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)));
+    }
+
+    //сортировка по возврастанию
+    @Transactional
+    public List<CourseDto> getCurrentUserAccessibleCoursesSortByCost() {
+        String login = authenticationFacade.getAuthentication().getName();
+        userRepository.findByLogin(login).getCourses();
+        return CourseMapper.INSTANCE.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)).stream().sorted(Comparator.comparing(Course::getCost)).toList());
+    }
+
+    //сортировка по возврастанию
+    @Transactional
+    public List<LessonDto> getCurrentUserAccessibleLessonsSortByCost() {
+        String login = authenticationFacade.getAuthentication().getName();
+        List<Course> userCourses = userRepository.findCoursesByUserFetch(userRepository.findByLogin(login));
+        List<Lesson> lessons = new ArrayList<>();
+        for (Course course : userCourses) {
+            lessons.addAll(userRepository.findLessonsByCourseFetch(course.getCourseName()));
+        }
+        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessons.stream().sorted(Comparator.comparing(Lesson::getCost)).toList());
     }
 
     @SneakyThrows

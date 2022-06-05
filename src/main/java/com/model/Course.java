@@ -1,13 +1,16 @@
 package com.model;
 
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Entity(name = "courses")
+@Entity
+@Table(name = "courses")
 public class Course {
     @Id
     @GeneratedValue
@@ -16,6 +19,7 @@ public class Course {
     private String courseName;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CourseReview> reviews;
     private Double cost;

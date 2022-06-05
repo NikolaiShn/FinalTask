@@ -38,8 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setForceEncoding(true);
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration", "/knowledgeDirectories", "/themes/**").permitAll()
+                .antMatchers("/registration", "/knowledgeDirectories", "/themes/**", "/courses").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/courses", "/user/lessons").authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/")
                 .and()

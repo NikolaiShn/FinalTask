@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class LessonDto {
+    @JsonIgnore
     private Integer id;
     private String lessonName;
     private String descripion;

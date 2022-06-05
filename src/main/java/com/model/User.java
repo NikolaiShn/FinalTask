@@ -2,6 +2,7 @@ package com.model;
 
 import lombok.*;
 
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,5 +31,6 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<KnowledgeDirectory> knowledgeDirectories = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name="users_courses", joinColumns={@JoinColumn(name="user_id")}, inverseJoinColumns={@JoinColumn(name="course_id")})
     private List<Course> courses = new ArrayList<>();
 }

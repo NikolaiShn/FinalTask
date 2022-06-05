@@ -6,6 +6,7 @@ import lombok.ToString;
 
 @Data
 public class LessonReviewDto {
+    @JsonIgnore
     private Long id;
     private String text;
     @JsonIgnore
