@@ -4,6 +4,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,6 +24,7 @@ public class User {
     private String password;
     @Column
     private String name;
+    //change to last_name
     @Column
     private String lastName;
     @ManyToOne

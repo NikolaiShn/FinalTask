@@ -22,7 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query("SELECT l FROM Course c JOIN c.lessons l WHERE c.courseName = :courseName")
     List<Lesson> findLessonsByCourseFetch(@Param("courseName") String courseName);
-//    @Query
-//    User findByLoginFetchKnowledgeDirectories();
+
     User save(User user);
 }

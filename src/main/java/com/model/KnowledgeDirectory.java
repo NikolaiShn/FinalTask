@@ -5,12 +5,13 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "knowledge_directories")
-public class KnowledgeDirectory {
+public class KnowledgeDirectory implements Serializable {
     @Id
     @GeneratedValue
     private Long id;

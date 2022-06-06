@@ -4,10 +4,11 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity(name = "lessons_reviews")
-public class LessonReview {
+public class LessonReview implements Serializable {
     @Id
     @GeneratedValue
     private Long id;

@@ -36,6 +36,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Transactional
     public User getUserByLogin(String login) throws NotFoundException {
         User user = userRepository.findByLogin(login);
         if (user != null) {
@@ -58,7 +59,6 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public List<CourseDto> getCurrentUserAccessibleCourses() {
-
         String login = authenticationFacade.getAuthentication().getName();
         return CourseMapper.INSTANCE.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)));
     }
@@ -83,6 +83,7 @@ public class UserService implements UserDetailsService {
         return LessonMapper.INSTANCE.lessonsToLessonDtos(lessons.stream().sorted(Comparator.comparing(Lesson::getCost)).toList());
     }
 
+    @Transactional
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -93,6 +94,7 @@ public class UserService implements UserDetailsService {
                 authorities);
     }
 
+    @Transactional
     public boolean registerUser(String username, String password, String role, String name, String lastName) throws UserExistException {
         if(userRepository.findByLogin(username) != null) {
             throw new UserExistException("такой пользователь существует");

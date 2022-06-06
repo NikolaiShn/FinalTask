@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "course_reviews")
-public class CourseReview {
+public class CourseReview implements Serializable {
     @Id
     @GeneratedValue
     private Long id;

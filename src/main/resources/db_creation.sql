@@ -11,7 +11,7 @@ id int PRIMARY KEY AUTO_INCREMENT,
 login varchar(50) UNIQUE NOT NULL,
 password varchar(255) NOT NULL,
 name varchar(255) NOT NULL,
-lastName varchar(255) NOT NULL,
+last_name varchar(255) NOT NULL,
 role_id int NOT NULL,
 FOREIGN KEY (role_id) REFERENCES Roles(id)
 );
@@ -45,7 +45,7 @@ tuesday_date timestamp,
 wednesday_date timestamp,
 thursday_date timestamp,
 friday_date timestamp,
-cost varchar(255),
+cost varchar(255) NOT NULL,
 FOREIGN KEY (course_id) REFERENCES Courses(id),
 FOREIGN KEY (lesson_form_id) REFERENCES Lessons_Form(id)
 );
@@ -103,11 +103,11 @@ FOREIGN KEY (course_id) REFERENCES Courses(id)
 INSERT INTO Roles(role) VALUES ("ROLE_ADMIN");
 INSERT INTO Roles(role) VALUES ("ROLE_USER");
 
-INSERT INTO Users(login, password, name, lastName, role_id) VALUES ("testuser", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ivan", "pupkin", 2);
-INSERT INTO Users(login, password, name, lastName, role_id) VALUES ("admin1", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "vitaly", "pupkin", 1);
-INSERT INTO Users(login, password, name, lastName, role_id) VALUES ("admin2", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "kirill", "pupkin", 1);
-INSERT INTO Users(login, password, name, lastName, role_id) VALUES ("admin3", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "artyom", "pupkin", 1);
-INSERT INTO Users(login, password, name, lastName, role_id) VALUES ("admin4", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "evgeniy", "pupkin", 1);
+INSERT INTO Users(login, password, name, last_name, role_id) VALUES ("testuser", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "ivan", "pupkin", 2);
+INSERT INTO Users(login, password, name, last_name, role_id) VALUES ("admin1", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "vitaly", "pupkin", 1);
+INSERT INTO Users(login, password, name, last_name, role_id) VALUES ("admin2", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "kirill", "pupkin", 1);
+INSERT INTO Users(login, password, name, last_name, role_id) VALUES ("admin3", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "artyom", "pupkin", 1);
+INSERT INTO Users(login, password, name, last_name, role_id) VALUES ("admin4", "$2a$12$OLhaHMa.GYk.2Bp3OI44S.q3m4JGhEHfdkujm0X1Iu9yhNrdWSkOe", "evgeniy", "pupkin", 1);
 
 INSERT INTO Knowledge_Directories(name) VALUES ("литература");
 INSERT INTO Knowledge_Directories(name) VALUES ("математика");

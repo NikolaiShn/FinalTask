@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "themes")
 public class Theme {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     @Column(name = "theme_name")
     private String themeName;

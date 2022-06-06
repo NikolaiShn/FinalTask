@@ -1,17 +1,20 @@
 package com.model;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Data
 @Entity
 @Table(name = "courses")
-public class Course {
+public class Course implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
@@ -27,6 +30,17 @@ public class Course {
     private LocalDateTime startDate;
     @Column(name = "end_date")
     private LocalDateTime endDate;
+
+    public Course(String courseName, Double cost, LocalDateTime startDate, LocalDateTime endDate) {
+        this.courseName = courseName;
+        this.cost = cost;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Course(String courseName) {
+        this.courseName = courseName;
+    }
 
     public void addCourseReview(CourseReview courseReview) {
         reviews.add(courseReview);
