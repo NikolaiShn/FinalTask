@@ -6,18 +6,26 @@ import com.dto.ThemeDto;
 import com.dto.mappers.KnowledgeDirectoryMapper;
 import com.dto.mappers.SectionMapper;
 import com.dto.mappers.ThemeMapper;
+import com.exceptions.NotFoundException;
+import com.model.KnowledgeDirectory;
+import com.model.Section;
+import com.model.Theme;
 import com.web.dao.KnowledgeDirectoryRepository;
+import com.web.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+@Service
 public class KnowledgeDirectoryService {
 
     @Autowired
     private KnowledgeDirectoryRepository knowledgeDirectoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Transactional
@@ -33,6 +41,64 @@ public class KnowledgeDirectoryService {
     @Transactional
     public List<SectionDto> findKnowledgeDirectorySections(String knowledgeDirectoryName) {
         return SectionMapper.INSTANCE.sectionsToSectionDtos(knowledgeDirectoryRepository.findByName(knowledgeDirectoryName).getSections());
+    }
+
+    @Transactional
+    public boolean createKnowLedgeDirectory(String knowledgeDirectoryName) {
+        KnowledgeDirectory knowledgeDirectory = new KnowledgeDirectory();
+        knowledgeDirectory.setName(knowledgeDirectoryName);
+        knowledgeDirectoryRepository.save(knowledgeDirectory);
+        return true;
+    }
+
+    @Transactional
+    public boolean deleteKnowledgeDirectory(String knowledgeDirectoryName) throws NotFoundException {
+        KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
+        if(knowledgeDirectory == null) {
+            throw new NotFoundException("Такого справочника не существует");
+        } else {
+            knowledgeDirectoryRepository.delete(knowledgeDirectory);
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean editKnowledgeDirectoryName(String newKnowledgeDirectoryName, String knowledgeDirectoryName) throws NotFoundException {
+        KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
+        if(knowledgeDirectory == null) {
+            throw new NotFoundException("Такого справочника не существует");
+        } else {
+            knowledgeDirectoryRepository.editKnowledgeDirectoryName(newKnowledgeDirectoryName, knowledgeDirectoryName);
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean addTheme(String knowledgeDirectoryName, String themeName) throws NotFoundException {
+        KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
+        if(knowledgeDirectory == null) {
+            throw new NotFoundException("Такого справочника не существует");
+        } else {
+            Theme theme = new Theme();
+            theme.setThemeName(themeName);
+            knowledgeDirectory.addTheme(theme);
+            knowledgeDirectoryRepository.save(knowledgeDirectory);
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean addSection(String knowledgeDirectoryName, String sectionName) throws NotFoundException {
+        KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
+        if(knowledgeDirectory == null) {
+            throw new NotFoundException("Такого справочника не существует");
+        } else {
+            Section section = new Section();
+            section.setSectionName(sectionName);
+            knowledgeDirectory.addSection(section);
+            knowledgeDirectoryRepository.save(knowledgeDirectory);
+            return true;
+        }
     }
 
 }

@@ -24,13 +24,13 @@ public class User implements Serializable {
     private String password;
     @Column
     private String name;
-    //change to last_name
-    @Column
+    @Column(name = "last_name")
     private String lastName;
     @ManyToOne
     @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "users_ibfk_1"))
     private Role role;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name="users_knowledge_directories", joinColumns={@JoinColumn(name="user_id")}, inverseJoinColumns={@JoinColumn(name="knowledge_directory_id")})
     private List<KnowledgeDirectory> knowledgeDirectories = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name="users_courses", joinColumns={@JoinColumn(name="user_id")}, inverseJoinColumns={@JoinColumn(name="course_id")})

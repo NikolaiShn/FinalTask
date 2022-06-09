@@ -68,5 +68,4 @@ public class CourseController {
     public boolean deleteCourse(@RequestParam("courseName") String courseName) throws NotFoundException {
         return courseService.deleteCourse(courseName);
     }
-
 }

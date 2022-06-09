@@ -1,7 +1,9 @@
 package com.web.controllers;
 
+import com.exceptions.NotFoundException;
 import com.exceptions.UserExistException;
 import com.model.User;
+import com.web.services.UserAuthenticationService;
 import com.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,10 +17,13 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserAuthenticationService userAuthenticationService;
+
     @GetMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public User admin(@RequestParam String login) {
-        UserDetails userDetails = userService.loadUserByUsername(login);
+    public User admin(@RequestParam String login) throws NotFoundException {
+        UserDetails userDetails = userAuthenticationService.loadUserByUsername(login);
         return new User();
     }
 

@@ -1,9 +1,7 @@
 package com.web.services;
 
 import com.dto.CourseDto;
-import com.dto.LessonDto;
 import com.dto.mappers.CourseMapper;
-import com.dto.mappers.LessonMapper;
 import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
 import com.exceptions.NotFoundException;
@@ -11,13 +9,13 @@ import com.model.Course;
 import com.web.controllers.AuthenticationFacade;
 import com.web.dao.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
+@Service
 public class CourseService {
 
     @Autowired
@@ -70,7 +68,7 @@ public class CourseService {
     public boolean editCourseCost(String courseName, Double cost) throws NotFoundException, IncorrectInputException {
         Course course = courseRepository.findByCourseName(courseName);
         if(cost <= 0) {
-            throw new IncorrectInputException("Некоррктная стоимость");
+            throw new IncorrectInputException("Некорректная стоимость");
         }
         if(course == null) {
             throw new NotFoundException("Такого юзера не существует");
@@ -80,8 +78,6 @@ public class CourseService {
         }
     }
 
-    //TODO сделать функцию, которая удаляет даже если есть ссылки на юзера
-    //Удаляет те у которых нету ссылок на юзера и удаляет урок
     @Transactional
     public boolean deleteCourse(String courseName) throws NotFoundException {
         Course course = courseRepository.findByCourseName(courseName);

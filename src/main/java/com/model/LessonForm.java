@@ -5,10 +5,12 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
-@Entity(name = "lessons_form")
+@Entity
+@Table(name = "lessons_form")
 public class LessonForm implements Serializable {
     @Id
     private Long id;

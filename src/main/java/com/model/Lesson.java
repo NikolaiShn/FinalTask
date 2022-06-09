@@ -1,6 +1,5 @@
 package com.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -13,7 +12,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "lessons")
 public class Lesson {
@@ -22,8 +20,8 @@ public class Lesson {
     private Integer id;
     @Column(name = "lesson_name")
     private String lessonName;
-    @Column(name = "description")
-    private String descripion;
+    @Column
+    private String description;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LessonReview> reviews;

@@ -39,7 +39,7 @@ id int PRIMARY KEY AUTO_INCREMENT,
 course_id int NOT NULL,
 lesson_form_id int NOT NULL,
 lesson_name varchar(255),
-description varchar(255),
+description varchar(255) UNIQUE,
 monday_date timestamp,
 tuesday_date timestamp,
 wednesday_date timestamp,
@@ -53,15 +53,15 @@ FOREIGN KEY (lesson_form_id) REFERENCES Lessons_Form(id)
 CREATE TABLE IF NOT EXISTS Themes(
 id int PRIMARY KEY AUTO_INCREMENT,
 knowledge_directory_id int NOT NULL,
-theme_name varchar(255) UNIQUE NOT NULL,
-FOREIGN KEY (knowledge_directory_id) REFERENCES Knowledge_Directories(id)
+theme_name varchar(255) NOT NULL,
+FOREIGN KEY (knowledge_directory_id) REFERENCES Knowledge_Directories(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Sections(
 id int PRIMARY KEY AUTO_INCREMENT,
 knowledge_directory_id int NOT NULL,
-section_name varchar(255) UNIQUE NOT NULL,
-FOREIGN KEY (knowledge_directory_id) REFERENCES Knowledge_Directories(id)
+section_name varchar(255) NOT NULL,
+FOREIGN KEY (knowledge_directory_id) REFERENCES Knowledge_Directories(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Users_Knowledge_Directories(
@@ -70,6 +70,7 @@ knowledge_directory_id int NOT NULL,
 PRIMARY KEY (user_id, knowledge_directory_id),
 FOREIGN KEY (user_id) REFERENCES Users(id),
 FOREIGN KEY (knowledge_directory_id) REFERENCES Knowledge_Directories(id)
+ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Lessons_Reviews(
@@ -92,6 +93,7 @@ course_id int NOT NULL,
 PRIMARY KEY (user_id, course_id),
 FOREIGN KEY (user_id) REFERENCES Users(id),
 FOREIGN KEY (course_id) REFERENCES Courses(id)
+ON DELETE CASCADE
 );
 
 /*

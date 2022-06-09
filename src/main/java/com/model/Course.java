@@ -17,7 +17,7 @@ import java.util.List;
 public class Course implements Serializable {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     @Column(name = "course_name")
     private String courseName;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,6 +46,7 @@ public class Course implements Serializable {
         reviews.add(courseReview);
         courseReview.setCourse(this);
     }
+
     public void removeCourseReview(CourseReview courseReview) {
         reviews.remove(courseReview);
         courseReview.setCourse(null);

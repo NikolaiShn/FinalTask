@@ -1,6 +1,6 @@
 package com.web;
 
-import com.web.services.UserService;
+import com.web.services.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,11 +18,11 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userService;
+    private UserAuthenticationService userAuthenticationService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userAuthenticationService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Bean
@@ -38,9 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setForceEncoding(true);
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration", "/knowledgeDirectories", "/themes/**", "/courses","/coursesCostGreater/{cost}", "/lessons/**", "/lessons/{lessonForm}", "/coursesSortByStartDate", "/coursesSortByEndDate", "/course/create", "/course/delete").permitAll()
-                .antMatchers("/admin/**", "/course/editName", "/course/editCost").hasRole("ADMIN")
-                .antMatchers("/user/courses", "/user/lessons").authenticated()
+                .antMatchers("/registration", "/knowledgeDirectories", "/themes/**", "/courses","/coursesCostGreater/{cost}",
+                        "/lessons/**", "/lessons/{lessonForm}", "/coursesSortByStartDate", "/coursesSortByEndDate", "/course/create", "/course/delete", "/lessons/create").permitAll()
+                .antMatchers("/admin/**", "/course/editName", "/course/editCost/", "/lessons/editName/**").hasRole("ADMIN")
+                .antMatchers("/user/courses", "/user/lessons", "/profile").authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/")
                 .and()

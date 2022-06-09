@@ -1,13 +1,15 @@
 package com.web.controllers;
 
 import com.dto.CourseDto;
+import com.dto.CourseDtoReceive;
+import com.dto.CreateLessonDto;
 import com.dto.LessonDto;
+import com.exceptions.*;
 import com.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,25 +21,52 @@ public class UserController {
 
     @GetMapping(value = "/user/courses", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<CourseDto> getCurrentUserAccessibleCourses() {
+    public List<CourseDto> getCurrentUserAccessibleCourses() throws NotAuthenticatedException {
         return userService.getCurrentUserAccessibleCourses();
     }
 
     @GetMapping(value = "/user/coursesSortByCost", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<CourseDto> getCurrentUserAccessibleCoursesSortByCost() {
+    public List<CourseDto> getCurrentUserAccessibleCoursesSortByCost() throws NotAuthenticatedException {
         return userService.getCurrentUserAccessibleCoursesSortByCost();
     }
 
     @GetMapping(value = "/user/lessons", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<LessonDto> getCurrentUserAccessibleLessons() {
+    public List<LessonDto> getCurrentUserAccessibleLessons() throws NotAuthenticatedException {
         return userService.getCurrentUserAccessibleLessons();
     }
 
     @GetMapping(value = "/user/lessonsSortByCost", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<LessonDto> getCurrentUserAccessibleLessonsSortByCost() {
+    public List<LessonDto> getCurrentUserAccessibleLessonsSortByCost() throws NotAuthenticatedException {
         return userService.getCurrentUserAccessibleLessonsSortByCost();
     }
+
+    @PutMapping(value = "/user/subscribeCourse")
+    @ResponseBody
+    public boolean subscribeToCourse(@RequestParam String courseName) throws NotFoundException, NotAuthenticatedException, CourseExistException {
+        return userService.subscribeToCourse(courseName);
+    }
+
+    @PutMapping(value = "/user/subscribeLesson")
+    @ResponseBody
+    public boolean subscribeToLesson(@RequestParam String lessonName) throws NotFoundException, NotAuthenticatedException {
+        return userService.subscribeToLesson(lessonName);
+    }
+
+    @PostMapping(value = "/user/createCourse")
+    @ResponseBody
+    public boolean createCourse(@RequestBody CourseDtoReceive course) throws NotAuthenticatedException, InvalidDateException, CourseExistException {
+        return userService.createCourse(course.getCourseName(), course.getCost(), course.getStartDate(), course.getEndDate());
+    }
+
+    //автоматом генерит и курс
+    @PostMapping(value = "/user/createLesson")
+    @ResponseBody
+    public boolean createLesson(@RequestBody CreateLessonDto createLessonDto) throws NotAuthenticatedException, InvalidDateException, CourseExistException, LessonExistException {
+        return userService.createLesson(createLessonDto.getCourseName(), createLessonDto.getLessonDescription(), createLessonDto.getCost(), createLessonDto.getStartDate(), createLessonDto.getEndDate());
+    }
+
+
 }

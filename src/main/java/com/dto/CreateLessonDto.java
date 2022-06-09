@@ -6,8 +6,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class CourseDtoReceive {
+public class CreateLessonDto {
     private String courseName;
+    private String lessonDescription;
     private Double cost;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;

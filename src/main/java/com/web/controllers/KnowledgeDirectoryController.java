@@ -3,13 +3,12 @@ package com.web.controllers;
 import com.dto.KnowledgeDirectoryDto;
 import com.dto.SectionDto;
 import com.dto.ThemeDto;
+import com.exceptions.NotFoundException;
 import com.web.services.KnowledgeDirectoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,16 +24,47 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.getAllKnowledgeDirectories();
     }
 
-    @GetMapping(value = "/themes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/knowledgeDirectory/themes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<ThemeDto> getAllThemesKnowledgeDirectories(@RequestParam String knowledgeDirectoryName) {
         return knowledgeDirectoryService.findKnowledgeDirectoryThemes(knowledgeDirectoryName);
     }
 
-    @GetMapping(value = "/sections", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/knowledgeDirectory/sections", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<SectionDto> getAllSectionsKnowledgeDirectories(@RequestParam String knowledgeDirectoryName) {
         return knowledgeDirectoryService.findKnowledgeDirectorySections(knowledgeDirectoryName);
+    }
+
+    @PostMapping(value = "/knowledgeDirectory/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public boolean createKnowledgeDirectory(@RequestParam String knowledgeDirectoryName) {
+        return knowledgeDirectoryService.createKnowLedgeDirectory(knowledgeDirectoryName);
+    }
+
+    @PutMapping(value = "/knowledgeDirectory/editName")
+    @ResponseBody
+    public boolean editKnowledgeDirectory(@RequestParam String oldName, @RequestParam String newName) throws NotFoundException {
+        return knowledgeDirectoryService.editKnowledgeDirectoryName(newName, oldName);
+    }
+
+    @DeleteMapping(value = "/knowledgeDirectory/delete")
+    @ResponseBody
+    public boolean deleteKnowledgeDirectory(@RequestParam String knowledgeDirectoryName) throws NotFoundException {
+        return knowledgeDirectoryService.deleteKnowledgeDirectory(knowledgeDirectoryName);
+    }
+
+    //запретить не админу
+    @PostMapping(value = "/knowledgeDirectory/createTheme", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public boolean createTheme(@RequestParam String knowledgeDirectoryName, @RequestParam String themeName) throws NotFoundException {
+        return knowledgeDirectoryService.addTheme(knowledgeDirectoryName, themeName);
+    }
+    //запретить не админу
+    @PostMapping(value = "/knowledgeDirectory/createSection", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public boolean createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException {
+        return knowledgeDirectoryService.addSection(knowledgeDirectoryName, sectionName);
     }
 
 }

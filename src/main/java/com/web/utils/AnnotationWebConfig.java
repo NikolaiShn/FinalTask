@@ -8,10 +8,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan("com.web")
 @EnableJpaRepositories(basePackages = "com.web", transactionManagerRef = "transactionManager")
+@EnableTransactionManagement
 public class AnnotationWebConfig {
 
     @Bean(name = "entityManagerFactory")

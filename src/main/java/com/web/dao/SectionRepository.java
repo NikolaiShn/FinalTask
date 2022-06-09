@@ -1,5 +1,6 @@
 package com.web.dao;
 
+import com.model.Section;
 import com.model.Theme;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,17 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ThemeRepository extends JpaRepository<Theme, Long> {
+public interface SectionRepository extends JpaRepository<Section, Long> {
 
-    Theme findByThemeName(String themeName);
+    Section findBySectionName(String sectionName);
 
     @Override
     @Transactional
-    List<Theme> findAll();
+    List<Section> findAll();
 
     @Modifying
     @Transactional
-    @Query("update Theme theme set theme.themeName =:newName where theme.themeName =:oldName")
-    void editThemeName(@Param("newName") String newName, @Param("oldName") String oldName);
-
+    @Query("update Section section set section.sectionName =:newName where section.sectionName =:oldName")
+    void editSectionName(@Param("newName") String newName, @Param("oldName") String oldName);
 }
