@@ -1,9 +1,7 @@
 package com.web.controllers;
 
-import com.dto.CourseDto;
-import com.dto.CourseDtoReceive;
-import com.dto.CreateLessonDto;
-import com.dto.LessonDto;
+import com.dto.*;
+import com.dto.mappers.AwardReceiveDto;
 import com.exceptions.*;
 import com.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +64,18 @@ public class UserController {
     @ResponseBody
     public boolean createLesson(@RequestBody CreateLessonDto createLessonDto) throws NotAuthenticatedException, InvalidDateException, CourseExistException, LessonExistException {
         return userService.createLesson(createLessonDto.getCourseName(), createLessonDto.getLessonDescription(), createLessonDto.getCost(), createLessonDto.getStartDate(), createLessonDto.getEndDate());
+    }
+
+    @GetMapping(value = "/user/schedule")
+    @ResponseBody
+    public List<ScheduleLessonDto> getSchedule() throws NotAuthenticatedException, NotFoundException {
+        return userService.getSchedule();
+    }
+
+    @PutMapping(value = "/user/award")
+    @ResponseBody
+    public boolean assignAward(@RequestBody AwardReceiveDto awardReceiveDto) throws NotFoundException {
+        return userService.assignAward(awardReceiveDto.getAward(), awardReceiveDto.getLogin());
     }
 
 

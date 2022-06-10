@@ -13,6 +13,7 @@ password varchar(255) NOT NULL,
 name varchar(255) NOT NULL,
 last_name varchar(255) NOT NULL,
 role_id int NOT NULL,
+award double,
 FOREIGN KEY (role_id) REFERENCES Roles(id)
 );
 

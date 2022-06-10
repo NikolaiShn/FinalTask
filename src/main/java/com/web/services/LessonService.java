@@ -5,9 +5,7 @@ import com.dto.mappers.LessonMapper;
 import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
 import com.exceptions.NotFoundException;
-import com.model.Course;
-import com.model.Lesson;
-import com.model.LessonForm;
+import com.model.*;
 import com.web.dao.CourseRepository;
 import com.web.dao.LessonFormRepository;
 import com.web.dao.LessonRepository;
@@ -113,6 +111,18 @@ public class LessonService {
             throw new NotFoundException("Такого занятия не существует");
         } else {
             lessonRepository.delete(lesson);
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean createLessonReview(String lessonDescription, String reviewText) throws NotFoundException {
+        Lesson lesson = lessonRepository.findByDescription(lessonDescription);
+        if(lesson == null) {
+            throw new NotFoundException("Такого занятия не существует");
+        } else {
+            LessonReview lessonReview = new LessonReview(reviewText);
+            lesson.addLessonReview(lessonReview);
             return true;
         }
     }

@@ -21,4 +21,8 @@ public class CourseReview implements Serializable {
     @ToString.Exclude
     @ManyToOne
     private Course course;
+
+    public CourseReview(String reviewText) {
+        this.text = reviewText;
+    }
 }

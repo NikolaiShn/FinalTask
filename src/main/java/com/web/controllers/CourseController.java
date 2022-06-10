@@ -68,4 +68,10 @@ public class CourseController {
     public boolean deleteCourse(@RequestParam("courseName") String courseName) throws NotFoundException {
         return courseService.deleteCourse(courseName);
     }
+
+    @PostMapping(value = "/course/createReview")
+    @ResponseBody
+    public boolean createCourseReview(@RequestParam("courseName") String courseName, @RequestParam("reviewText") String reviewText) throws NotFoundException {
+        return courseService.createCourseReview(courseName, reviewText);
+    }
 }

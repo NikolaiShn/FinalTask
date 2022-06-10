@@ -2,8 +2,10 @@ package com.web.services;
 
 import com.dto.CourseDto;
 import com.dto.LessonDto;
+import com.dto.ScheduleLessonDto;
 import com.dto.mappers.CourseMapper;
 import com.dto.mappers.LessonMapper;
+import com.dto.mappers.ScheduleLessonMapper;
 import com.exceptions.*;
 import com.model.Course;
 import com.model.Lesson;
@@ -223,5 +225,33 @@ public class UserService {
             userRepository.save(user);
             return true;
         }
+    }
+
+    @Transactional
+    public List<ScheduleLessonDto> getSchedule() throws NotAuthenticatedException, NotFoundException {
+        String login = authenticationFacade.getAuthentication().getName();
+        if(login == null) {
+            throw new NotAuthenticatedException("Юзер не аутентифицирован");
+        }
+        User user = userRepository.findByLogin(login);
+        List<Lesson> allUserLessons = new ArrayList<>();
+        for(Course course : user.getCourses()) {
+            allUserLessons.addAll(course.getLessons());
+        }
+        if(allUserLessons.isEmpty()) {
+            throw new NotFoundException("занятий у юзера нет");
+        }
+        return ScheduleLessonMapper.INSTANSE.lessonsToScheduleLessonDtos(allUserLessons);
+    }
+
+    @Transactional
+    public boolean assignAward(Double award, String login) throws NotFoundException {
+        User user = userRepository.findByLogin(login);
+        if(user == null) {
+            throw new NotFoundException("Юзера с таким логином не существует");
+        }
+        user.setAward(award);
+        userRepository.save(user);
+        return true;
     }
 }

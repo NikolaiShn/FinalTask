@@ -6,6 +6,7 @@ import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
 import com.exceptions.NotFoundException;
 import com.model.Course;
+import com.model.CourseReview;
 import com.web.controllers.AuthenticationFacade;
 import com.web.dao.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class CourseService {
     public boolean editCourseName(String oldName, String newName) throws NotFoundException {
         Course course = courseRepository.findByCourseName(oldName);
         if(course == null) {
-            throw new NotFoundException("Такого юзера не существует");
+            throw new NotFoundException("Такого курса не существует");
         } else {
             courseRepository.editCourseName(newName, oldName);
             return true;
@@ -71,7 +72,7 @@ public class CourseService {
             throw new IncorrectInputException("Некорректная стоимость");
         }
         if(course == null) {
-            throw new NotFoundException("Такого юзера не существует");
+            throw new NotFoundException("Такого курса не существует");
         } else {
             courseRepository.editCourseCost(courseName, cost);
             return true;
@@ -82,9 +83,21 @@ public class CourseService {
     public boolean deleteCourse(String courseName) throws NotFoundException {
         Course course = courseRepository.findByCourseName(courseName);
         if(course == null) {
-            throw new NotFoundException("Такого юзера не существует");
+            throw new NotFoundException("Такого курса не существует");
         } else {
             courseRepository.delete(course);
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean createCourseReview(String courseName, String reviewText) throws NotFoundException {
+        Course course = courseRepository.findByCourseName(courseName);
+        if(course == null) {
+            throw new NotFoundException("Такого юзера не существует");
+        } else {
+            CourseReview courseReview = new CourseReview(reviewText);
+            course.addCourseReview(courseReview);
             return true;
         }
     }

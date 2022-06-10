@@ -2,6 +2,8 @@ package com.web.controllers;
 
 import com.dto.LessonDto;
 import com.dto.LessonDtoReceive;
+import com.dto.LessonReviewDto;
+import com.dto.LessonReviewReceiveDto;
 import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
 import com.exceptions.NotFoundException;
@@ -47,21 +49,27 @@ public class LessonController {
                                             lessonDtoReceive.getFridayDate(), lessonDtoReceive.getCost());
     }
 
-    @PutMapping(value = "lessons/editName")
+    @PutMapping(value = "/lessons/editName")
     @ResponseBody
     public boolean editLessonDescription(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName) throws NotFoundException {
         return lessonService.editLessonDescription(oldName, newName);
     }
 
-    @PutMapping(value = "lessons/editCost")
+    @PutMapping(value = "/lessons/editCost")
     @ResponseBody
     public boolean editLessonCost(@RequestParam("lessonName") String lessonName, @RequestParam("newCost") Double newCost) throws NotFoundException {
         return lessonService.editLessonCost(lessonName, newCost);
     }
 
-    @DeleteMapping(value = "lessons/delete")
+    @DeleteMapping(value = "/lessons/delete")
     @ResponseBody
     public boolean deleteLesson(@RequestParam("lessonName") String lessonName) throws NotFoundException {
         return lessonService.deleteLesson(lessonName);
+    }
+
+    @PostMapping(value = "/lessons/createReview")
+    @ResponseBody
+    public boolean createLessonReview(@RequestBody LessonReviewReceiveDto lessonReviewReceiveDto) throws NotFoundException {
+        return lessonService.createLessonReview(lessonReviewReceiveDto.getLessonDescription(), lessonReviewReceiveDto.getReviewText());
     }
 }

@@ -29,6 +29,8 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "users_ibfk_1"))
     private Role role;
+    @Column
+    private Double award = null;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name="users_knowledge_directories", joinColumns={@JoinColumn(name="user_id")}, inverseJoinColumns={@JoinColumn(name="knowledge_directory_id")})
     private List<KnowledgeDirectory> knowledgeDirectories = new ArrayList<>();
