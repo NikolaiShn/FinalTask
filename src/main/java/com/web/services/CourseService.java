@@ -7,7 +7,6 @@ import com.exceptions.InvalidDateException;
 import com.exceptions.NotFoundException;
 import com.model.Course;
 import com.model.CourseReview;
-import com.web.controllers.AuthenticationFacade;
 import com.web.dao.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,25 +22,27 @@ public class CourseService {
     private CourseRepository courseRepository;
     @Autowired
     private AuthenticationFacade authenticationFacade;
+    @Autowired
+    private CourseMapper courseMapper;
 
     @Transactional
     public List<CourseDto> getAllCourses() {
-        return CourseMapper.INSTANCE.coursesToCourseDtos(courseRepository.findAll());
+        return courseMapper.coursesToCourseDtos(courseRepository.findAll());
     }
 
     @Transactional
     public List<CourseDto>  findByCostGreaterThan(Double cost) {
-        return CourseMapper.INSTANCE.coursesToCourseDtos(courseRepository.findByCostGreaterThan(cost));
+        return courseMapper.coursesToCourseDtos(courseRepository.findByCostGreaterThan(cost));
     }
 
     @Transactional
     public List<CourseDto> getAllCoursesAllOrderByStartDateDesc() {
-        return CourseMapper.INSTANCE.coursesToCourseDtos(courseRepository.findAllByOrderByStartDateDesc());
+        return courseMapper.coursesToCourseDtos(courseRepository.findAllByOrderByStartDateDesc());
     }
 
     @Transactional
     public List<CourseDto> getAllCoursesAllOrderByEndDateDesc() {
-        return CourseMapper.INSTANCE.coursesToCourseDtos(courseRepository.findAllByOrderByEndDateDesc());
+        return courseMapper.coursesToCourseDtos(courseRepository.findAllByOrderByEndDateDesc());
     }
 
     @Transactional

@@ -6,7 +6,6 @@ import com.dto.ProfileKnowledgeDirectoryDto;
 import com.dto.mappers.ProfileCourseMapper;
 import com.dto.mappers.ProfileKnowledgeDirectoryMapper;
 import com.model.User;
-import com.web.controllers.AuthenticationFacade;
 import com.web.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,17 @@ public class ProfileService {
     private AuthenticationFacade authenticationFacade;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProfileCourseMapper profileCourseMapper;
+    @Autowired
+    private ProfileKnowledgeDirectoryMapper profileKnowledgeDirectoryMapper;
 
-    //возможно сделать на 2 запроса меньше
     @Transactional
     public ProfileDto getProfile() {
         String login = authenticationFacade.getAuthentication().getName();
         User user = userRepository.findByLogin(login);
-        List<ProfileCourseDto> profileCourseDtos = ProfileCourseMapper.INSTANCE.coursesToProfileCourseDtos(userRepository.findCoursesByUserFetch(user));
-        List<ProfileKnowledgeDirectoryDto> profileKnowledgeDirectoryDtos = ProfileKnowledgeDirectoryMapper.INSTANCE.knowledgeDirectoriesToProfileKnowledgeDirectoriesDto(userRepository.findKnowledgeDirectoriesByUserFetch(user));
+        List<ProfileCourseDto> profileCourseDtos = profileCourseMapper.coursesToProfileCourseDtos(userRepository.findCoursesByUserFetch(user));
+        List<ProfileKnowledgeDirectoryDto> profileKnowledgeDirectoryDtos = profileKnowledgeDirectoryMapper.knowledgeDirectoriesToProfileKnowledgeDirectoriesDto(userRepository.findKnowledgeDirectoriesByUserFetch(user));
         return new ProfileDto(user.getName(), user.getLastName(), profileCourseDtos, profileKnowledgeDirectoryDtos);
     }
 
@@ -49,6 +51,4 @@ public class ProfileService {
         userRepository.save(user);
         return true;
     }
-
-
 }

@@ -1,19 +1,16 @@
 package com.dto.mappers;
 
-import com.dto.CourseDto;
 import com.dto.ProfileCourseDto;
 import com.model.Course;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = {LessonMapper.class, CourseReviewMapper.class})
+@Mapper(componentModel = "spring", uses = {LessonMapper.class, CourseReviewMapper.class})
 public interface ProfileCourseMapper {
-    ProfileCourseMapper INSTANCE = Mappers.getMapper(ProfileCourseMapper.class);
 
     @IterableMapping(qualifiedByName = "dto_without_lessons")
     List<ProfileCourseDto> coursesToProfileCourseDtos (List<Course> courses);

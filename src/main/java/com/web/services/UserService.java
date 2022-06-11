@@ -11,7 +11,6 @@ import com.model.Course;
 import com.model.Lesson;
 import com.model.LessonForm;
 import com.model.User;
-import com.web.controllers.AuthenticationFacade;
 import com.web.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,6 +39,12 @@ public class UserService {
     private CourseService courseService;
     @Autowired
     private LessonFormRepository lessonFormRepository;
+    @Autowired
+    private CourseMapper courseMapper;
+    @Autowired
+    private LessonMapper lessonMapper;
+    @Autowired
+    private ScheduleLessonMapper scheduleLessonMapper;
 
     @Transactional
     public User getUserByLogin(String login) throws NotFoundException {
@@ -62,7 +67,7 @@ public class UserService {
         for (Course course : userCourses) {
             lessons.addAll(userRepository.findLessonsByCourseFetch(course.getCourseName()));
         }
-        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessons);
+        return lessonMapper.lessonsToLessonDtos(lessons);
     }
 
     @Transactional
@@ -71,7 +76,7 @@ public class UserService {
         if(login == null) {
             throw new NotAuthenticatedException("Юзер не аутентифиирован");
         }
-        return CourseMapper.INSTANCE.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)));
+        return courseMapper.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)));
     }
 
     //сортировка по возврастанию
@@ -81,7 +86,7 @@ public class UserService {
         if(login == null) {
             throw new NotAuthenticatedException("Юзер не аутентифиирован");
         }
-        return CourseMapper.INSTANCE.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)).stream().sorted(Comparator.comparing(Course::getCost)).toList());
+        return courseMapper.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)).stream().sorted(Comparator.comparing(Course::getCost)).toList());
     }
 
     //сортировка по возврастанию
@@ -96,10 +101,8 @@ public class UserService {
         for (Course course : userCourses) {
             lessons.addAll(userRepository.findLessonsByCourseFetch(course.getCourseName()));
         }
-        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessons.stream().sorted(Comparator.comparing(Lesson::getCost)).toList());
+        return lessonMapper.lessonsToLessonDtos(lessons.stream().sorted(Comparator.comparing(Lesson::getCost)).toList());
     }
-
-
 
     @Transactional
     public boolean registerUser(String username, String password, String role, String name, String lastName) throws UserExistException {
@@ -241,7 +244,7 @@ public class UserService {
         if(allUserLessons.isEmpty()) {
             throw new NotFoundException("занятий у юзера нет");
         }
-        return ScheduleLessonMapper.INSTANSE.lessonsToScheduleLessonDtos(allUserLessons);
+        return scheduleLessonMapper.lessonsToScheduleLessonDtos(allUserLessons);
     }
 
     @Transactional

@@ -33,6 +33,4 @@ public class ProfileController {
     public boolean changeProfileUserLastName(@RequestParam String newLastName) {
         return profileService.changeProfileUserLastName(newLastName);
     }
-
-
 }

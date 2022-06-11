@@ -6,13 +6,11 @@ import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = {LessonReviewMapper.class, LessonFormMapper.class})
+@Mapper(componentModel = "spring", uses = {LessonReviewMapper.class, LessonFormMapper.class})
 public interface LessonMapper {
-    LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
 
     @IterableMapping(qualifiedByName = "dto_without_course")
     List<LessonDto> lessonsToLessonDtos (List<Lesson> lessons);

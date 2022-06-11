@@ -1,4 +1,4 @@
-package com.dto.mappers;
+package com.dto;
 
 import lombok.Data;
 

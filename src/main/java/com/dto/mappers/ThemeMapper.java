@@ -4,13 +4,11 @@ import com.dto.ThemeDto;
 import com.model.Theme;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ThemeMapper {
-    ThemeMapper INSTANCE = Mappers.getMapper(ThemeMapper.class);
 
     @Mapping(target = "knowledgeDirectory", ignore = true)
     ThemeDto themeToThemeDto(Theme theme);

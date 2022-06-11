@@ -18,14 +18,15 @@ public class ThemeService {
 
     @Autowired
     private KnowledgeDirectoryRepository knowledgeDirectoryRepository;
-
     @Autowired
     private ThemeRepository themeRepository;
+    @Autowired
+    private ThemeMapper themeMapper;
 
 
     @Transactional
     public List<ThemeDto> getAllThemes() {
-        return ThemeMapper.INSTANCE.themesToThemeDtos(themeRepository.findAll());
+        return themeMapper.themesToThemeDtos(themeRepository.findAll());
     }
 
     @Transactional

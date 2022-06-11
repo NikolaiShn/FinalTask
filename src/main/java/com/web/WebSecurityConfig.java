@@ -4,6 +4,7 @@ import com.web.services.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,10 +39,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setForceEncoding(true);
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration", "/knowledgeDirectories", "/themes/**", "/courses","/coursesCostGreater/{cost}",
-                        "/lessons/**", "/lessons/{lessonForm}", "/coursesSortByStartDate", "/coursesSortByEndDate", "/course/create", "/course/delete", "/lessons/create").permitAll()
-                .antMatchers("/admin/**", "/course/editName", "/course/editCost/", "/lessons/editName/**").hasRole("ADMIN")
-                .antMatchers("/user/courses", "/user/lessons", "/profile").authenticated()
+                .antMatchers("/admin/**",
+                        "/course/create", "/course/editName", "/course/editCost", "/course/delete", "/course/createReview",
+                        "/lessons/create", "/lessons/editName", "/lessons/editCost", "/lessons/delete", "/lessons/createReview",
+                        "/sections/create", "/sections/editName", "/sections/delete",
+                        "/themes/create", "/themes/editName", "/themes/delete",
+                        "/knowledgeDirectory/create", "/knowledgeDirectory/editName", "/knowledgeDirectory/delete", "/knowledgeDirectory/createTheme", "/knowledgeDirectory/createSection")
+                .hasRole("ADMIN")
+                .antMatchers("/user/award").hasRole("USER")
+                .antMatchers("/profile", "/profile/changeName", "/profile/changeLastName",
+                        "/user/schedule", "/user/createLesson", "/user/createCourse", "/user/subscribeLesson",
+                        "/user/subscribeCourse", "/user/lessonsSortByCost", "/user/lessons",
+                        "/user/coursesSortByCost", "/user/courses").authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/")
                 .and()

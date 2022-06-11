@@ -1,7 +1,7 @@
 package com.web.controllers;
 
 import com.dto.*;
-import com.dto.mappers.AwardReceiveDto;
+import com.dto.AwardReceiveDto;
 import com.exceptions.*;
 import com.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

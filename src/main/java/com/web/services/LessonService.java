@@ -25,20 +25,22 @@ public class LessonService {
     private CourseRepository courseRepository;
     @Autowired
     private LessonFormRepository lessonFormRepository;
+    @Autowired
+    private LessonMapper lessonMapper;
 
     @Transactional
     public List<LessonDto> getAllLessons() {
-        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessonRepository.findAll());
+        return lessonMapper.lessonsToLessonDtos(lessonRepository.findAll());
     }
 
     @Transactional
     public List<LessonDto> findByLessonForm(String lessonForm) {
-        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessonRepository.findByLessonForm(lessonForm));
+        return lessonMapper.lessonsToLessonDtos(lessonRepository.findByLessonForm(lessonForm));
     }
 
     @Transactional
     public List<LessonDto> getLessonsByCourse(String courseName) {
-        return LessonMapper.INSTANCE.lessonsToLessonDtos(lessonRepository.findLessonsByCourseFetch(courseName));
+        return lessonMapper.lessonsToLessonDtos(lessonRepository.findLessonsByCourseFetch(courseName));
     }
 
 

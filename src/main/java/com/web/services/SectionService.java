@@ -1,9 +1,7 @@
 package com.web.services;
 
 import com.dto.SectionDto;
-import com.dto.ThemeDto;
 import com.dto.mappers.SectionMapper;
-import com.dto.mappers.ThemeMapper;
 import com.exceptions.NotFoundException;
 import com.model.KnowledgeDirectory;
 import com.model.Section;
@@ -20,13 +18,14 @@ public class SectionService {
 
     @Autowired
     private KnowledgeDirectoryRepository knowledgeDirectoryRepository;
-
     @Autowired
     private SectionRepository sectionRepository;
+    @Autowired
+    private SectionMapper sectionMapper;
 
     @Transactional
     public List<SectionDto> getAllSections() {
-        return SectionMapper.INSTANCE.sectionsToSectionDtos(sectionRepository.findAll());
+        return sectionMapper.sectionsToSectionDtos(sectionRepository.findAll());
     }
 
     @Transactional

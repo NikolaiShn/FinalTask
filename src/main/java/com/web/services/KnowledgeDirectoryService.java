@@ -23,24 +23,29 @@ public class KnowledgeDirectoryService {
 
     @Autowired
     private KnowledgeDirectoryRepository knowledgeDirectoryRepository;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private KnowledgeDirectoryMapper knowledgeDirectoryMapper;
+    @Autowired
+    private ThemeMapper themeMapper;
+    @Autowired
+    private SectionMapper sectionMapper;
 
 
     @Transactional
     public List<KnowledgeDirectoryDto> getAllKnowledgeDirectories() {
-        return KnowledgeDirectoryMapper.INSTANCE.knowledgeDirectoriesToKnowledgeDirectoriesDto(knowledgeDirectoryRepository.findAll());
+        return knowledgeDirectoryMapper.knowledgeDirectoriesToKnowledgeDirectoriesDto(knowledgeDirectoryRepository.findAll());
     }
 
     @Transactional
     public List<ThemeDto> findKnowledgeDirectoryThemes(String knowledgeDirectoryName) {
-        return ThemeMapper.INSTANCE.themesToThemeDtos(knowledgeDirectoryRepository.findByName(knowledgeDirectoryName).getThemes());
+        return themeMapper.themesToThemeDtos(knowledgeDirectoryRepository.findByName(knowledgeDirectoryName).getThemes());
     }
 
     @Transactional
     public List<SectionDto> findKnowledgeDirectorySections(String knowledgeDirectoryName) {
-        return SectionMapper.INSTANCE.sectionsToSectionDtos(knowledgeDirectoryRepository.findByName(knowledgeDirectoryName).getSections());
+        return sectionMapper.sectionsToSectionDtos(knowledgeDirectoryRepository.findByName(knowledgeDirectoryName).getSections());
     }
 
     @Transactional

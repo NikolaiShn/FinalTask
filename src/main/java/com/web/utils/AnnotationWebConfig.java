@@ -11,7 +11,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan("com.web")
+@ComponentScan(basePackages = {"com.web", "com.dto"})
 @EnableJpaRepositories(basePackages = "com.web", transactionManagerRef = "transactionManager")
 @EnableTransactionManagement
 public class AnnotationWebConfig {
