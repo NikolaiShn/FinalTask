@@ -32,13 +32,13 @@ public class SectionController {
 
     @PutMapping(value = "/sections/editName")
     @ResponseBody
-    public boolean editSectionName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName) throws NotFoundException {
-        return sectionService.editSectionName(oldName, newName);
+    public boolean editSectionName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
+        return sectionService.editSectionName(oldName, newName, knowledgeDirectoryName);
     }
 
     @DeleteMapping(value = "/sections/delete")
     @ResponseBody
-    public boolean deleteSection(@RequestParam("sectionName") String sectionName) throws NotFoundException {
-        return sectionService.deleteSection(sectionName);
+    public boolean deleteSection(@RequestParam("sectionName") String sectionName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
+        return sectionService.deleteSection(sectionName, knowledgeDirectoryName);
     }
 }

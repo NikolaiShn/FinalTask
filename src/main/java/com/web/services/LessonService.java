@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -43,21 +44,23 @@ public class LessonService {
         return lessonMapper.lessonsToLessonDtos(lessonRepository.findLessonsByCourseFetch(courseName));
     }
 
-
     @Transactional
     public boolean createLesson(String courseName, String lessonName, String lessonFormName, String description,
                                 LocalDateTime mondayDate, LocalDateTime tuesdayDate,
                                 LocalDateTime wednesdayDate, LocalDateTime thursdayDate,
                                 LocalDateTime fridayDate, Double cost) throws InvalidDateException, IncorrectInputException, NotFoundException {
         if(cost <= 0) {
-            throw new IncorrectInputException("Некоррктная стоимость");
+            throw new IncorrectInputException("Некорректная стоимость");
         }
-        if(mondayDate.isBefore(LocalDateTime.now()) ||
+        if((mondayDate.isBefore(LocalDateTime.now()) ||
            tuesdayDate.isBefore(LocalDateTime.now()) ||
            wednesdayDate.isBefore(LocalDateTime.now()) ||
            thursdayDate.isBefore(LocalDateTime.now()) ||
-           fridayDate.isBefore(LocalDateTime.now())
-        ) {
+           fridayDate.isBefore(LocalDateTime.now())) &&
+                ((ChronoUnit.DAYS.between(tuesdayDate, mondayDate) > 1) ||
+                 (ChronoUnit.DAYS.between(wednesdayDate, tuesdayDate) > 1) ||
+                 (ChronoUnit.DAYS.between(thursdayDate, wednesdayDate) > 1) ||
+                 (ChronoUnit.DAYS.between(fridayDate, thursdayDate) > 1))) {
             throw new InvalidDateException("дата некорректна");
         } else {
             Lesson lesson = new Lesson();
@@ -85,30 +88,30 @@ public class LessonService {
     }
 
     @Transactional
-    public boolean editLessonDescription(String lessonName, String newLessonName) throws NotFoundException {
-        Lesson lesson = lessonRepository.findByLessonName(lessonName);
+    public boolean editLessonDescription(String lessonName, String newLessonName, String courseName) throws NotFoundException {
+        Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
         if(lesson == null) {
             throw new NotFoundException("Такого занятия не существует");
         } else {
-            lessonRepository.editLessonName(newLessonName, lessonName);
+            lesson.setLessonName(newLessonName);
             return true;
         }
     }
 
     @Transactional
-    public boolean editLessonCost(String lessonName, Double cost) throws NotFoundException {
-        Lesson lesson = lessonRepository.findByLessonName(lessonName);
+    public boolean editLessonCost(String lessonName, Double cost, String courseName) throws NotFoundException {
+        Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
         if(lesson == null) {
             throw new NotFoundException("Такого занятия не существует");
         } else {
-            lessonRepository.editLessonCost(lessonName, cost);
+            lesson.setCost(cost);
             return true;
         }
     }
 
     @Transactional
-    public boolean deleteLesson(String lessonName) throws NotFoundException {
-        Lesson lesson = lessonRepository.findByLessonName(lessonName);
+    public boolean deleteLesson(String lessonName, String courseName) throws NotFoundException {
+        Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
         if(lesson == null) {
             throw new NotFoundException("Такого занятия не существует");
         } else {

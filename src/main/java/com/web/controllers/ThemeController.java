@@ -30,13 +30,13 @@ public class ThemeController {
 
     @PutMapping(value = "/themes/editName")
     @ResponseBody
-    public boolean editThemeName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName) throws NotFoundException {
-        return themeService.editThemeName(oldName, newName);
+    public boolean editThemeName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
+        return themeService.editThemeName(oldName, newName, knowledgeDirectoryName);
     }
 
     @DeleteMapping(value = "/themes/delete")
     @ResponseBody
-    public boolean deleteTheme(@RequestParam String themeName) throws NotFoundException {
-        return themeService.deleteTheme(themeName);
+    public boolean deleteTheme(@RequestParam String themeName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
+        return themeService.deleteTheme(themeName, knowledgeDirectoryName);
     }
 }

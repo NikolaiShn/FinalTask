@@ -43,19 +43,19 @@ public class SectionService {
     }
 
     @Transactional
-    public boolean editSectionName(String sectionName, String newSectionName) throws NotFoundException {
-        Section section = sectionRepository.findBySectionName(sectionName);
+    public boolean editSectionName(String sectionName, String newSectionName, String knowledgeDirectoryName) throws NotFoundException {
+        Section section = sectionRepository.findSectionByNameAndKnowledgeDirectoryName(sectionName, knowledgeDirectoryName);
         if(section == null) {
             throw new NotFoundException("Такого раздела не существует");
         } else {
-            sectionRepository.editSectionName(newSectionName, sectionName);
+            section.setSectionName(newSectionName);
             return true;
         }
     }
 
     @Transactional
-    public boolean deleteSection(String sectionName) throws NotFoundException {
-        Section section = sectionRepository.findBySectionName(sectionName);
+    public boolean deleteSection(String sectionName, String knowledgeDirectoryName) throws NotFoundException {
+        Section section = sectionRepository.findSectionByNameAndKnowledgeDirectoryName(sectionName, knowledgeDirectoryName);
         if(section == null) {
             throw new NotFoundException("Такого раздела не существует");
         } else {

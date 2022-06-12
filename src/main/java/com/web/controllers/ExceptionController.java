@@ -1,6 +1,7 @@
 package com.web.controllers;
 
 import com.exceptions.*;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,4 +64,14 @@ public class ExceptionController {
         modelAndView.addObject("errMsg", e.getMessage());
         return modelAndView;
     }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ModelAndView handleDataAccessException(DataAccessException e) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("exceptionClass", e.getClass());
+        modelAndView.addObject("errMsg", e.getMessage());
+        return modelAndView;
+    }
+
+
 }

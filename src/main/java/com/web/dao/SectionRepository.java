@@ -18,8 +18,7 @@ public interface SectionRepository extends JpaRepository<Section, Long> {
     @Transactional
     List<Section> findAll();
 
-    @Modifying
     @Transactional
-    @Query("update Section section set section.sectionName =:newName where section.sectionName =:oldName")
-    void editSectionName(@Param("newName") String newName, @Param("oldName") String oldName);
+    @Query("SELECT section from Section section WHERE section.sectionName =:sectionName AND section.knowledgeDirectory.name =:knowledgeDirectoryName")
+    Section findSectionByNameAndKnowledgeDirectoryName(@Param("sectionName") String sectionName, @Param("knowledgeDirectoryName") String knowledgeDirectoryName);
 }

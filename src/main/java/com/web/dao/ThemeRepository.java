@@ -17,9 +17,8 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> {
     @Transactional
     List<Theme> findAll();
 
-    @Modifying
     @Transactional
-    @Query("update Theme theme set theme.themeName =:newName where theme.themeName =:oldName")
-    void editThemeName(@Param("newName") String newName, @Param("oldName") String oldName);
+    @Query("SELECT theme from Theme theme where theme.themeName =:themeName AND theme.knowledgeDirectory.name =:knowledgeDirectoryName")
+    Theme findThemeByNameAndKnowledgeDirectory(@Param("themeName") String themeName, @Param("knowledgeDirectoryName") String knowledgeDirectoryName);
 
 }

@@ -47,7 +47,7 @@ public class CourseService {
 
     @Transactional
     public boolean createCourse(String courseName, Double cost, LocalDateTime startDate, LocalDateTime endDate) throws InvalidDateException {
-        if(endDate.isBefore(startDate)) {
+        if(endDate.isBefore(startDate) && startDate.isBefore(LocalDateTime.now())) {
             throw new InvalidDateException("Дата не корректна");
         } else {
             courseRepository.save(new Course(courseName, cost, startDate, endDate));

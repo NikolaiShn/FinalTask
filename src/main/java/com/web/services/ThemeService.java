@@ -44,19 +44,19 @@ public class ThemeService {
     }
 
     @Transactional
-    public boolean editThemeName(String themeName, String newThemeName) throws NotFoundException {
-        Theme theme = themeRepository.findByThemeName(themeName);
+    public boolean editThemeName(String themeName, String newThemeName, String knowledgeDirectoryName) throws NotFoundException {
+        Theme theme = themeRepository.findThemeByNameAndKnowledgeDirectory(themeName, knowledgeDirectoryName);
         if(theme == null) {
             throw new NotFoundException("Такой темы не существует");
         } else {
-            themeRepository.editThemeName(newThemeName, themeName);
+            theme.setThemeName(newThemeName);
             return true;
         }
     }
 
     @Transactional
-    public boolean deleteTheme(String themeName) throws NotFoundException {
-        Theme theme = themeRepository.findByThemeName(themeName);
+    public boolean deleteTheme(String themeName, String knowledgeDirectoryName) throws NotFoundException {
+        Theme theme = themeRepository.findThemeByNameAndKnowledgeDirectory(themeName, knowledgeDirectoryName);
         if(theme == null) {
             throw new NotFoundException("Такой темы не существует");
         } else {

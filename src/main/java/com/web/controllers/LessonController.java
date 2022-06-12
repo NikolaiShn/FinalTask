@@ -50,20 +50,20 @@ public class LessonController {
 
     @PutMapping(value = "/lessons/editName")
     @ResponseBody
-    public boolean editLessonDescription(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName) throws NotFoundException {
-        return lessonService.editLessonDescription(oldName, newName);
+    public boolean editLessonDescription(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("courseName") String courseName) throws NotFoundException {
+        return lessonService.editLessonDescription(oldName, newName, courseName);
     }
 
     @PutMapping(value = "/lessons/editCost")
     @ResponseBody
-    public boolean editLessonCost(@RequestParam("lessonName") String lessonName, @RequestParam("newCost") Double newCost) throws NotFoundException {
-        return lessonService.editLessonCost(lessonName, newCost);
+    public boolean editLessonCost(@RequestParam("lessonName") String lessonName, @RequestParam("newCost") Double newCost, @RequestParam("courseName") String courseName) throws NotFoundException {
+        return lessonService.editLessonCost(lessonName, newCost, courseName);
     }
 
     @DeleteMapping(value = "/lessons/delete")
     @ResponseBody
-    public boolean deleteLesson(@RequestParam("lessonName") String lessonName) throws NotFoundException {
-        return lessonService.deleteLesson(lessonName);
+    public boolean deleteLesson(@RequestParam("lessonName") String lessonName, @RequestParam("courseName") String courseName) throws NotFoundException {
+        return lessonService.deleteLesson(lessonName, courseName);
     }
 
     @PostMapping(value = "/lessons/createReview")

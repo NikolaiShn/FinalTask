@@ -19,6 +19,10 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Transactional
     List<Lesson> findAll();
 
+    @Query("SELECT lesson FROM Lesson lesson WHERE lesson.lessonName =:lessonName AND lesson.course.courseName =:courseName")
+    @Transactional
+    Lesson findLessonByCourseNameAndLessonName(@Param("lessonName") String lessonForm, @Param("courseName") String courseName);
+
     @Query("SELECT lessons FROM Lesson lessons WHERE lessons.lessonForm.formName = :lessonForm")
     @Transactional
     List<Lesson> findByLessonForm(@Param("lessonForm") String lessonForm);
@@ -26,14 +30,4 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Transactional
     @Query("SELECT lessons FROM Lesson lessons WHERE lessons.course.courseName = :courseName")
     List<Lesson> findLessonsByCourseFetch(@Param("courseName") String courseName);
-
-    @Modifying
-    @Transactional
-    @Query("update Lesson lesson set lesson.lessonName =:newName where lesson.lessonName =:oldName")
-    void editLessonName(@Param("newName") String newName, @Param("oldName")String oldName);
-
-    @Modifying
-    @Transactional
-    @Query("update Lesson lesson set lesson.cost =:newCost where lesson.lessonName =:lessonName")
-    void editLessonCost(@Param("lessonName") String lessonName, @Param("newCost")Double newCost);
 }
