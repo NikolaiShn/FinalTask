@@ -2,7 +2,6 @@ package com.web.dao;
 
 import com.model.Lesson;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     @Query("SELECT lesson FROM Lesson lesson WHERE lesson.lessonName =:lessonName AND lesson.course.courseName =:courseName")
     @Transactional
-    Lesson findLessonByCourseNameAndLessonName(@Param("lessonName") String lessonForm, @Param("courseName") String courseName);
+    Lesson findLessonByCourseNameAndLessonName(@Param("lessonName") String lessonName, @Param("courseName") String courseName);
 
     @Query("SELECT lessons FROM Lesson lessons WHERE lessons.lessonForm.formName = :lessonForm")
     @Transactional

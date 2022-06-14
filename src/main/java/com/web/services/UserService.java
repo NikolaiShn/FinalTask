@@ -12,15 +12,21 @@ import com.model.Lesson;
 import com.model.LessonForm;
 import com.model.User;
 import com.web.dao.*;
+//import org.apache.velocity.Template;
+//import org.apache.velocity.VelocityContext;
+//import org.apache.velocity.exception.ParseErrorException;
+//import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.mail.javamail.JavaMailSenderImpl;
+//import org.springframework.mail.javamail.MimeMessageHelper;
+//import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+//import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -45,6 +51,10 @@ public class UserService {
     private LessonMapper lessonMapper;
     @Autowired
     private ScheduleLessonMapper scheduleLessonMapper;
+//    @Autowired
+//    private JavaMailSenderImpl mailSender;
+//    @Autowired
+//    private VelocityEngine velocityEngine;
 
     @Transactional
     public User getUserByLogin(String login) throws NotFoundException {
@@ -118,6 +128,23 @@ public class UserService {
             String fullNameRole = "ROLE_" + role;
             user.setRole(roleRepository.findByRole(fullNameRole));
             userRepository.save(user);
+//            try {
+//                MimeMessagePreparator preparator = mimeMessage -> {
+//                    mailSender.setHost("mail.host.com");
+//                    MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+//                    message.setTo("svik@live.com");
+//                    message.setFrom("testmail@uk");
+//                    Template t = velocityEngine.getTemplate("velocity/template.vm", "UTF-8");
+//                    VelocityContext context = new VelocityContext();
+//                    context.put("name", "World");
+//                    StringWriter writer = new StringWriter();
+//                    t.merge(context, writer);
+//                };
+//                mailSender.send(preparator);
+//            } catch (ResourceNotFoundException |
+//                    ParseErrorException e) {
+//                System.out.println(e);
+//            }
             return true;
         }
     }

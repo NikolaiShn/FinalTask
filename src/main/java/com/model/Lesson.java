@@ -1,5 +1,6 @@
 package com.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "lessons")
@@ -43,6 +45,19 @@ public class Lesson {
     @ToString.Exclude
     @ManyToOne
     private Course course;
+
+    public Lesson(Integer id, String lessonName, String description, List<LessonReview> reviews, Double cost, LocalDateTime mondayDate, LocalDateTime tuesdayDate, LocalDateTime wednesdayDate, LocalDateTime thursdayDate, LocalDateTime fridayDate) {
+        this.id = id;
+        this.lessonName = lessonName;
+        this.description = description;
+        this.reviews = reviews;
+        this.cost = cost;
+        this.mondayDate = mondayDate;
+        this.tuesdayDate = tuesdayDate;
+        this.wednesdayDate = wednesdayDate;
+        this.thursdayDate = thursdayDate;
+        this.fridayDate = fridayDate;
+    }
 
     public void addLessonReview(LessonReview lessonReview) {
         reviews.add(lessonReview);

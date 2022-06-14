@@ -88,7 +88,7 @@ public class LessonService {
     }
 
     @Transactional
-    public boolean editLessonDescription(String lessonName, String newLessonName, String courseName) throws NotFoundException {
+    public boolean editLessonName(String lessonName, String newLessonName, String courseName) throws NotFoundException {
         Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
         if(lesson == null) {
             throw new NotFoundException("Такого занятия не существует");

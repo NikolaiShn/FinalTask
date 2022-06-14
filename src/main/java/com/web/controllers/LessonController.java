@@ -51,7 +51,7 @@ public class LessonController {
     @PutMapping(value = "/lessons/editName")
     @ResponseBody
     public boolean editLessonDescription(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("courseName") String courseName) throws NotFoundException {
-        return lessonService.editLessonDescription(oldName, newName, courseName);
+        return lessonService.editLessonName(oldName, newName, courseName);
     }
 
     @PutMapping(value = "/lessons/editCost")

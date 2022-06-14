@@ -1,5 +1,6 @@
 package com.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 @Entity
