@@ -33,18 +33,5 @@ public class AnnotationWebConfig {
                 sessionFactory().getObject());
         return transactionManager;
     }
-
-//    @Bean
-//    public JavaMailSenderImpl javaMailSenderImpl() {
-//        return new JavaMailSenderImpl();
-//    }
-//
-//    @Bean
-//    public VelocityEngine velocityEngine() {
-//        VelocityEngine velocityEngine = new VelocityEngine();
-//        velocityEngine.addProperty("resource.loader", "class");
-//        velocityEngine.addProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-//        velocityEngine.init();
-//        return velocityEngine;
-//    }
 }
+

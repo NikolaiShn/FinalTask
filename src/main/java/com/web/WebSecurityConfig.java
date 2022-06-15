@@ -38,8 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         characterEncodingFilter.setForceEncoding(true);
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**",
-                        "/course/create", "/course/editName", "/course/editCost", "/course/delete", "/course/createReview",
+                .antMatchers("/course/create", "/course/editName", "/course/editCost", "/course/delete", "/course/createReview",
                         "/lessons/create", "/lessons/editName", "/lessons/editCost", "/lessons/delete", "/lessons/createReview",
                         "/sections/create", "/sections/editName", "/sections/delete",
                         "/themes/create", "/themes/editName", "/themes/delete",
