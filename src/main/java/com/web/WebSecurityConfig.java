@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @ComponentScan("com.web")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
+        httpSecurity.sessionManagement().sessionFixation().migrateSession();
         httpSecurity.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/course/create", "/course/editName", "/course/editCost", "/course/delete", "/course/createReview",

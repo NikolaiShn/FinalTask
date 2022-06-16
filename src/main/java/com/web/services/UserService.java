@@ -14,11 +14,20 @@ import com.model.User;
 import com.web.dao.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -47,6 +56,10 @@ public class UserService {
     private LessonMapper lessonMapper;
     @Autowired
     private ScheduleLessonMapper scheduleLessonMapper;
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+    @Autowired
+    private VelocityEngine velocityEngine;
 
     @Transactional
     public User getUserByLogin(String login) throws NotFoundException {
@@ -137,6 +150,23 @@ public class UserService {
             String fullNameRole = "ROLE_" + role;
             user.setRole(roleRepository.findByRole(fullNameRole));
             userRepository.save(user);
+            try {
+                MimeMessagePreparator preparator = mimeMessage -> {
+                    MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                    //TODO change to mailYouWant
+                    message.setTo("recipient_email");
+                    Template t = velocityEngine.getTemplate("templates/template.vm", "UTF-8");
+                    VelocityContext context = new VelocityContext();
+                    context.put("name", "World");
+                    StringWriter writer = new StringWriter();
+                    t.merge(context, writer);
+                    message.setText(writer.toString(), true);
+            };
+                mailSender.send(preparator);
+            } catch (ResourceNotFoundException |
+                    ParseErrorException e) {
+                System.out.println(e);
+            }
             userServiceLogger.info("end registerUser ");
             return true;
         }
