@@ -39,7 +39,7 @@ public class ThemeService {
     public boolean createTheme(String knowledgeDirectoryName, String themeName) throws NotFoundException {
         themeServiceLogger.info("start createTheme");
         KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
-        if(knowledgeDirectory == null) {
+        if (knowledgeDirectory == null) {
             themeServiceLogger.error("Такого справочника не существует");
             throw new NotFoundException("Такого справочника не существует");
         } else {
@@ -55,12 +55,14 @@ public class ThemeService {
     @Transactional
     public boolean editThemeName(String themeName, String newThemeName, String knowledgeDirectoryName) throws NotFoundException {
         themeServiceLogger.info("start editThemeName");
-        Theme theme = themeRepository.findThemeByNameAndKnowledgeDirectory(themeName, knowledgeDirectoryName);
-        if(theme == null) {
+        List<Theme> themes = themeRepository.findThemeByNameAndKnowledgeDirectory(themeName, knowledgeDirectoryName);
+        if (themes.isEmpty()) {
             themeServiceLogger.error("Такой темы не существует");
             throw new NotFoundException("Такой темы не существует");
         } else {
-            theme.setThemeName(newThemeName);
+            for(Theme theme : themes) {
+                theme.setThemeName(newThemeName);
+            }
             themeServiceLogger.info("end editThemeName");
             return true;
         }
@@ -69,14 +71,16 @@ public class ThemeService {
     @Transactional
     public boolean deleteTheme(String themeName, String knowledgeDirectoryName) throws NotFoundException {
         themeServiceLogger.info("start deleteTheme");
-        Theme theme = themeRepository.findThemeByNameAndKnowledgeDirectory(themeName, knowledgeDirectoryName);
-        if(theme == null) {
+        List<Theme> themes = themeRepository.findThemeByNameAndKnowledgeDirectory(themeName, knowledgeDirectoryName);
+        if (themes.isEmpty()) {
             themeServiceLogger.error("Такой темы не существует");
             throw new NotFoundException("Такой темы не существует");
         } else {
-            KnowledgeDirectory knowledgeDirectory = theme.getKnowledgeDirectory();
-            knowledgeDirectory.removeTheme(theme);
-            knowledgeDirectoryRepository.save(knowledgeDirectory);
+            for(Theme theme : themes) {
+                KnowledgeDirectory knowledgeDirectory = theme.getKnowledgeDirectory();
+                knowledgeDirectory.removeTheme(theme);
+                knowledgeDirectoryRepository.save(knowledgeDirectory);
+            }
             themeServiceLogger.info("end deleteTheme");
             return true;
         }

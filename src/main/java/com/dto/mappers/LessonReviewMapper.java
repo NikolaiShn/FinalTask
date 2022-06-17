@@ -13,14 +13,14 @@ import java.util.List;
 public interface LessonReviewMapper {
 
     @IterableMapping(qualifiedByName = "dto_without_lesson")
-    List<LessonReviewDto> lessonReviewsToLessonReviewDtos (List<LessonReview> lessonReviews);
+    List<LessonReviewDto> lessonReviewsToLessonReviewDtos(List<LessonReview> lessonReviews);
     @IterableMapping(qualifiedByName = "without_lesson")
-    List<LessonReview> lessonReviewDtosToLessonReviews (List<LessonReviewDto> lessonReviewDtos);
+    List<LessonReview> lessonReviewDtosToLessonReviews(List<LessonReviewDto> lessonReviewDtos);
 
     @Named("dto_without_lesson")
     @Mapping(target = "lesson", ignore = true)
-    LessonReviewDto lessonReviewToLessonReviewDto (LessonReview lessonReview);
+    LessonReviewDto lessonReviewToLessonReviewDto(LessonReview lessonReview);
     @Named("without_lesson")
     @Mapping(target = "lesson", ignore = true)
-    LessonReview lessonReviewDtoToLessonReview (LessonReviewDto lessonReviewDto);
+    LessonReview lessonReviewDtoToLessonReview(LessonReviewDto lessonReviewDto);
 }

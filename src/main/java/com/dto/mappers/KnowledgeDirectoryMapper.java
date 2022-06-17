@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {SectionMapper.class, ThemeMapper.class})
 public interface KnowledgeDirectoryMapper {
 
-    List<KnowledgeDirectoryDto> knowledgeDirectoriesToKnowledgeDirectoriesDto (List<KnowledgeDirectory> knowledgeDirectories);
-    List<KnowledgeDirectory> knowledgeDirectoriesDtoToKnowledgeDirectories (List<KnowledgeDirectoryDto> knowledgeDirectoriesDto);
+    List<KnowledgeDirectoryDto> knowledgeDirectoriesToKnowledgeDirectoriesDto(List<KnowledgeDirectory> knowledgeDirectories);
+    List<KnowledgeDirectory> knowledgeDirectoriesDtoToKnowledgeDirectories(List<KnowledgeDirectoryDto> knowledgeDirectoriesDto);
 }

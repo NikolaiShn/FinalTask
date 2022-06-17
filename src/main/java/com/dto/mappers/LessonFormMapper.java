@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface LessonFormMapper {
 
-    LessonFormDto lessonFormToLessonFormDto (LessonForm lessonForm);
-    LessonForm lessonFormDtoToLessonForm (LessonFormDto lessonFormDto);
+    LessonFormDto lessonFormToLessonFormDto(LessonForm lessonForm);
+    LessonForm lessonFormDtoToLessonForm(LessonFormDto lessonFormDto);
 }

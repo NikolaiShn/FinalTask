@@ -73,5 +73,35 @@ public class ExceptionController {
         return modelAndView;
     }
 
+    @ExceptionHandler(ThemeExistException.class)
+    public ModelAndView handleThemeExistException(ThemeExistException e) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("exceptionClass", e.getClass());
+        modelAndView.addObject("errMsg", e.getMessage());
+        return modelAndView;
+    }
 
+    @ExceptionHandler(SectionExistException.class)
+    public ModelAndView handleSectionExistException(SectionExistException e) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("exceptionClass", e.getClass());
+        modelAndView.addObject("errMsg", e.getMessage());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(RoleNotExistException.class)
+    public ModelAndView handleRoleNotExistException(RoleNotExistException e) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("exceptionClass", e.getClass());
+        modelAndView.addObject("errMsg", e.getMessage());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(IncorrectAssignAward.class)
+    public ModelAndView handleIncorrectAssignAward(IncorrectAssignAward e) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("exceptionClass", e.getClass());
+        modelAndView.addObject("errMsg", e.getMessage());
+        return modelAndView;
+    }
 }

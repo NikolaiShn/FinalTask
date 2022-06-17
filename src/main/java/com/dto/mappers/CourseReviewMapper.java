@@ -13,15 +13,15 @@ import java.util.List;
 public interface CourseReviewMapper {
 
     @IterableMapping(qualifiedByName = "dto_without_course")
-    List<CourseReviewDto> coursesReviewsToCourseReviewDtos (List<CourseReview> courseReviews);
+    List<CourseReviewDto> coursesReviewsToCourseReviewDtos(List<CourseReview> courseReviews);
     @IterableMapping(qualifiedByName = "without_course")
-    List<CourseReview> courseReviewDtosToCoursesReviews (List<CourseReviewDto> courseReviewDtos);
+    List<CourseReview> courseReviewDtosToCoursesReviews(List<CourseReviewDto> courseReviewDtos);
 
     @Named("dto_without_course")
     @Mapping(target = "course", ignore = true)
-    CourseReviewDto coursesReviewToCourseReviewDto (CourseReview courseReview);
+    CourseReviewDto coursesReviewToCourseReviewDto(CourseReview courseReview);
 
     @Named("without_course")
     @Mapping(target = "course", ignore = true)
-    CourseReview courseReviewDtoToCoursesReview (CourseReviewDto courseReviewDto);
+    CourseReview courseReviewDtoToCoursesReview(CourseReviewDto courseReviewDto);
 }

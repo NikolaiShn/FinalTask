@@ -7,6 +7,8 @@ import com.dto.mappers.KnowledgeDirectoryMapper;
 import com.dto.mappers.SectionMapper;
 import com.dto.mappers.ThemeMapper;
 import com.exceptions.NotFoundException;
+import com.exceptions.SectionExistException;
+import com.exceptions.ThemeExistException;
 import com.model.KnowledgeDirectory;
 import com.model.Section;
 import com.model.Theme;
@@ -72,7 +74,7 @@ public class KnowledgeDirectoryService {
     public boolean deleteKnowledgeDirectory(String knowledgeDirectoryName) throws NotFoundException {
         knowledgeDirectoryServiceLogger.info("start deleteKnowledgeDirectory");
         KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
-        if(knowledgeDirectory == null) {
+        if (knowledgeDirectory == null) {
             knowledgeDirectoryServiceLogger.error("Такого справочника не существует");
             throw new NotFoundException("Такого справочника не существует");
         } else {
@@ -86,7 +88,7 @@ public class KnowledgeDirectoryService {
     public boolean editKnowledgeDirectoryName(String newKnowledgeDirectoryName, String knowledgeDirectoryName) throws NotFoundException {
         knowledgeDirectoryServiceLogger.info("start editKnowledgeDirectoryName");
         KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
-        if(knowledgeDirectory == null) {
+        if (knowledgeDirectory == null) {
             knowledgeDirectoryServiceLogger.info("Такого справочника не существует");
             throw new NotFoundException("Такого справочника не существует");
         } else {
@@ -97,13 +99,18 @@ public class KnowledgeDirectoryService {
     }
 
     @Transactional
-    public boolean addTheme(String knowledgeDirectoryName, String themeName) throws NotFoundException {
+    public boolean addTheme(String knowledgeDirectoryName, String themeName) throws NotFoundException, ThemeExistException {
         knowledgeDirectoryServiceLogger.info("start addTheme");
         KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
-        if(knowledgeDirectory == null) {
+        if (knowledgeDirectory == null) {
             knowledgeDirectoryServiceLogger.error("Такого справочника не существует");
             throw new NotFoundException("Такого справочника не существует");
         } else {
+            for(Theme theme : knowledgeDirectory.getThemes()) {
+                if(theme.getThemeName().equals(themeName)) {
+                    throw new ThemeExistException("Такая тема в справочнике существует");
+                }
+            }
             Theme theme = new Theme();
             theme.setThemeName(themeName);
             knowledgeDirectory.addTheme(theme);
@@ -114,13 +121,18 @@ public class KnowledgeDirectoryService {
     }
 
     @Transactional
-    public boolean addSection(String knowledgeDirectoryName, String sectionName) throws NotFoundException {
+    public boolean addSection(String knowledgeDirectoryName, String sectionName) throws NotFoundException, SectionExistException {
         knowledgeDirectoryServiceLogger.info("start addSection");
         KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
-        if(knowledgeDirectory == null) {
+        if (knowledgeDirectory == null) {
             knowledgeDirectoryServiceLogger.error("Такого справочника не существует");
             throw new NotFoundException("Такого справочника не существует");
         } else {
+            for(Section section : knowledgeDirectory.getSections()) {
+                if(section.getSectionName().equals(sectionName)) {
+                    throw new SectionExistException("Такой раздел в справочнике существует");
+                }
+            }
             Section section = new Section();
             section.setSectionName(sectionName);
             knowledgeDirectory.addSection(section);
@@ -129,5 +141,4 @@ public class KnowledgeDirectoryService {
             return true;
         }
     }
-
 }

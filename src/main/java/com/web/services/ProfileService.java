@@ -56,7 +56,7 @@ public class ProfileService {
         profileServiceLogger.info("start changeProfileUserLastName");
         String login = authenticationFacade.getAuthentication().getName();
         User user = userRepository.findByLogin(login);
-        user.setName(newLastName);
+        user.setLastName(newLastName);
         userRepository.save(user);
         profileServiceLogger.info("end changeProfileUserLastName");
         return true;

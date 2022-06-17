@@ -1,7 +1,6 @@
 package com.web.controllers;
 
 import com.dto.SectionDto;
-import com.dto.ThemeDto;
 import com.exceptions.NotFoundException;
 import com.web.services.SectionService;
 import org.apache.logging.log4j.LogManager;
@@ -32,10 +31,10 @@ public class SectionController {
 
     @PostMapping(value = "/sections/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException {
+    public boolean createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException {
         sectionControllerLogger.info("start createSection");
         sectionControllerLogger.info("end createSection");
-        sectionService.createSection(knowledgeDirectoryName, sectionName);
+        return sectionService.createSection(knowledgeDirectoryName, sectionName);
     }
 
     @PutMapping(value = "/sections/editName")

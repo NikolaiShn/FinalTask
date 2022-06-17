@@ -38,7 +38,7 @@ public class SectionService {
     public boolean createSection(String knowledgeDirectoryName, String sectionName) throws NotFoundException {
         sectionServiceLogger.info("start createSection");
         KnowledgeDirectory knowledgeDirectory = knowledgeDirectoryRepository.findByName(knowledgeDirectoryName);
-        if(knowledgeDirectory == null) {
+        if (knowledgeDirectory == null) {
             sectionServiceLogger.error("Такого справочника не существует");
             throw new NotFoundException("Такого справочника не существует");
         } else {
@@ -51,31 +51,37 @@ public class SectionService {
         }
     }
 
+    //изменяет сразу все имена
     @Transactional
     public boolean editSectionName(String sectionName, String newSectionName, String knowledgeDirectoryName) throws NotFoundException {
         sectionServiceLogger.info("start editSectionName");
-        Section section = sectionRepository.findSectionByNameAndKnowledgeDirectoryName(sectionName, knowledgeDirectoryName);
-        if(section == null) {
+        List<Section> sections = sectionRepository.findSectionByNameAndKnowledgeDirectoryName(sectionName, knowledgeDirectoryName);
+        if (sections.isEmpty()) {
             sectionServiceLogger.error("Такого раздела не существует");
             throw new NotFoundException("Такого раздела не существует");
         } else {
-            section.setSectionName(newSectionName);
+            for(Section section : sections) {
+                section.setSectionName(newSectionName);
+            }
             sectionServiceLogger.info("end editSectionName");
             return true;
         }
     }
 
+    //если имя одинаковое удаляет сразу все
     @Transactional
     public boolean deleteSection(String sectionName, String knowledgeDirectoryName) throws NotFoundException {
         sectionServiceLogger.info("start deleteSection");
-        Section section = sectionRepository.findSectionByNameAndKnowledgeDirectoryName(sectionName, knowledgeDirectoryName);
-        if(section == null) {
+        List<Section> sections = sectionRepository.findSectionByNameAndKnowledgeDirectoryName(sectionName, knowledgeDirectoryName);
+        if (sections.isEmpty()) {
             sectionServiceLogger.error("Такого раздела не существует");
             throw new NotFoundException("Такого раздела не существует");
         } else {
-            KnowledgeDirectory knowledgeDirectory = section.getKnowledgeDirectory();
-            knowledgeDirectory.removeSection(section);
-            knowledgeDirectoryRepository.save(knowledgeDirectory);
+            for(Section section : sections) {
+                KnowledgeDirectory knowledgeDirectory = section.getKnowledgeDirectory();
+                knowledgeDirectory.removeSection(section);
+                knowledgeDirectoryRepository.save(knowledgeDirectory);
+            }
             sectionServiceLogger.info("end deleteSection");
             return true;
         }

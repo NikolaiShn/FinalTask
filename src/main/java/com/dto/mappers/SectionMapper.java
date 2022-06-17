@@ -11,12 +11,12 @@ import java.util.List;
 public interface SectionMapper {
 
     @Mapping(target = "knowledgeDirectory", ignore = true)
-    SectionDto sectionToSectionDto (Section section);
+    SectionDto sectionToSectionDto(Section section);
     @Mapping(target = "knowledgeDirectory", ignore = true)
-    Section sectionDtoToSection (SectionDto sectionDto);
+    Section sectionDtoToSection(SectionDto sectionDto);
 
     @Mapping(target = "knowledgeDirectory", ignore = true)
-    List<SectionDto> sectionsToSectionDtos (List<Section> sections);
+    List<SectionDto> sectionsToSectionDtos(List<Section> sections);
     @Mapping(target = "knowledgeDirectory", ignore = true)
-    List<Section> sectionDtosToSections (List<SectionDto> sectionDtos);
+    List<Section> sectionDtosToSections(List<SectionDto> sectionDtos);
 }

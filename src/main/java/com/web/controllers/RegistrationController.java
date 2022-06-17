@@ -1,5 +1,6 @@
 package com.web.controllers;
 
+import com.exceptions.RoleNotExistException;
 import com.exceptions.UserExistException;
 import com.web.services.UserAuthenticationService;
 import com.web.services.UserService;
@@ -36,7 +37,7 @@ public class RegistrationController {
     }
 
     @PostMapping(value = "/registration", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String registration(@ModelAttribute("username") String username, @ModelAttribute("password") String password, @ModelAttribute("role") String role, @ModelAttribute("name") String name, @ModelAttribute("lastName") String lastName) throws UserExistException {
+    public String registration(@ModelAttribute("username") String username, @ModelAttribute("password") String password, @ModelAttribute("role") String role, @ModelAttribute("name") String name, @ModelAttribute("lastName") String lastName) throws UserExistException, RoleNotExistException {
         registrationControllerLogger.info("start registration");
         userService.registerUser(username, password, role, name, lastName);
         registrationControllerLogger.info("end registration");

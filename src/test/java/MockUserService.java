@@ -93,7 +93,7 @@ public class MockUserService {
     }
 
     @Test
-    void registerUser() throws UserExistException {
+    void registerUser() throws UserExistException, RoleNotExistException {
         String login = "login";
         User user = new User();
         Role role = new Role();
@@ -166,6 +166,7 @@ public class MockUserService {
         String lessonName = "lessonName";
         String lessonFormName = "индивидуальное";
         String description = "best lesson";
+        String courseName = "course";
         Double cost = 50.0;
         LocalDateTime startDate = LocalDateTime.of(2022, 8, 05, 12, 10, 0);
         LocalDateTime endDate = LocalDateTime.of(2022, 8, 15, 12, 10, 0);
@@ -178,8 +179,8 @@ public class MockUserService {
         Mockito.when(lessonFormRepository.findByFormName(lessonFormName)).thenReturn(new LessonForm());
         Mockito.when(userRepository.findByLogin(login)).thenReturn(user);
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
-        Mockito.when(userService.createLesson(lessonName, description, cost, startDate, endDate)).thenReturn(true);
-        boolean result = userService.createLesson(lessonName, description, cost, startDate, endDate);
+        Mockito.when(userService.createLesson(lessonName, courseName, description, cost, startDate, endDate)).thenReturn(true);
+        boolean result = userService.createLesson(lessonName, courseName, description, cost, startDate, endDate);
         assertEquals(result, true);
     }
 
@@ -196,7 +197,7 @@ public class MockUserService {
     }
 
     @Test
-    void assignAward() throws NotFoundException {
+    void assignAward() throws NotFoundException, IncorrectAssignAward {
         String login = "login";
         Double award = 50.0;
         User user = new User();

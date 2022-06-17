@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Long> {
 

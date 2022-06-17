@@ -32,9 +32,9 @@ public class User implements Serializable {
     @Column
     private Double award = null;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name="users_knowledge_directories", joinColumns={@JoinColumn(name="user_id")}, inverseJoinColumns={@JoinColumn(name="knowledge_directory_id")})
+    @JoinTable(name = "users_knowledge_directories", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "knowledge_directory_id")})
     private List<KnowledgeDirectory> knowledgeDirectories = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name="users_courses", joinColumns={@JoinColumn(name="user_id")}, inverseJoinColumns={@JoinColumn(name="course_id")})
+    @JoinTable(name = "users_courses", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private List<Course> courses = new ArrayList<>();
 }

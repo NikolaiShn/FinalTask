@@ -2,7 +2,6 @@ package com.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.model.Course;
 import lombok.Data;
 import lombok.ToString;
 

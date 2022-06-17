@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,54 +61,109 @@ public class LessonService {
                                 LocalDateTime wednesdayDate, LocalDateTime thursdayDate,
                                 LocalDateTime fridayDate, Double cost) throws InvalidDateException, IncorrectInputException, NotFoundException {
         lessonServiceLogger.info("start createLesson");
-        if(cost <= 0) {
+        if (cost <= 0) {
             lessonServiceLogger.error("Некорректная стоимость");
             throw new IncorrectInputException("Некорректная стоимость");
         }
-        if((mondayDate.isBefore(LocalDateTime.now()) ||
-           tuesdayDate.isBefore(LocalDateTime.now()) ||
-           wednesdayDate.isBefore(LocalDateTime.now()) ||
-           thursdayDate.isBefore(LocalDateTime.now()) ||
-           fridayDate.isBefore(LocalDateTime.now())) &&
-                ((ChronoUnit.DAYS.between(tuesdayDate, mondayDate) > 1) ||
-                 (ChronoUnit.DAYS.between(wednesdayDate, tuesdayDate) > 1) ||
-                 (ChronoUnit.DAYS.between(thursdayDate, wednesdayDate) > 1) ||
-                 (ChronoUnit.DAYS.between(fridayDate, thursdayDate) > 1))) {
-            lessonServiceLogger.error("дата некорректна");
-            throw new InvalidDateException("дата некорректна");
-        } else {
-            Lesson lesson = new Lesson();
-            LessonForm lessonForm = lessonFormRepository.findByFormName(lessonFormName);
-            Course course = courseRepository.findByCourseName(courseName);
-            if(lessonForm == null) {
-                lessonServiceLogger.error("Занятий такого типа нет");
-                throw new NotFoundException("Занятий такого типа нет");
-            }
-            if(course == null) {
-                lessonServiceLogger.error("Курса не существует");
-                throw new NotFoundException("Курса не существует");
-            }
-            lesson.setLessonName(lessonName);
-            lesson.setMondayDate(mondayDate);
-            lesson.setTuesdayDate(tuesdayDate);
-            lesson.setWednesdayDate(wednesdayDate);
-            lesson.setThursdayDate(thursdayDate);
-            lesson.setFridayDate(fridayDate);
-            lesson.setDescription(description);
-            lesson.setLessonForm(lessonForm);
-            lesson.setCost(cost);
-            lesson.setCourse(course);
-            lessonRepository.save(lesson);
-            lessonServiceLogger.info("end createLesson");
-            return true;
+        int counter = 0;
+        int[] checkarr = new int[] {0, 0, 0, 0, 0};
+        if(mondayDate != null) {
+            counter++;
+            checkarr[0] = 1;
         }
+        if(tuesdayDate != null) {
+            counter++;
+            checkarr[1] = 1;
+        }
+        if(wednesdayDate != null) {
+            counter++;
+            checkarr[2] = 1;
+        }
+        if(thursdayDate != null) {
+            counter++;
+            checkarr[3] = 1;
+        }
+        if(fridayDate != null) {
+            counter++;
+            checkarr[4] = 1;
+        }
+        ArrayList<LocalDateTime> daysSchedule = new ArrayList<>();
+        ArrayList<Integer> daysNumber = new ArrayList<>();
+        for(int i = 0; i < checkarr.length; i++) {
+            switch (i) {
+                case 0 : if (checkarr[i] == 1) {
+                                daysSchedule.add(mondayDate);
+                                daysNumber.add(i);
+                            }
+                          break;
+                case 1 : if (checkarr[i] == 1) {
+                                daysSchedule.add(tuesdayDate);
+                                daysNumber.add(i);
+                            }
+                          break;
+                case 2 : if (checkarr[i] == 1) {
+                                daysSchedule.add(wednesdayDate);
+                                daysNumber.add(i);
+                            }
+                          break;
+                case 3 : if (checkarr[i] == 1) {
+                                daysSchedule.add(thursdayDate);
+                                daysNumber.add(i);
+                            }
+                          break;
+                case 4 : if (checkarr[i] == 1) {
+                                daysSchedule.add(fridayDate);
+                                daysNumber.add(i);
+                            }
+                          break;
+            }
+        }
+        for(int i = 0; i < daysSchedule.size(); i++) {
+            if(daysSchedule.get(i).isBefore(LocalDateTime.now())) {
+                throw new InvalidDateException("дата некорректна");
+            }
+        }
+        for(int i = 0; i < daysNumber.size() - 1; i++) {
+            if(ChronoUnit.DAYS.between(daysSchedule.get(i), daysSchedule.get(i+1)) != (daysNumber.get(i+1) - daysNumber.get(i) + 1)) {
+                throw new InvalidDateException("дата некорректна");
+            }
+        }
+        Lesson lessonCheck = lessonRepository.findByDescription(description);
+        if (lessonCheck != null) {
+            lessonServiceLogger.error("Такое занятие существует");
+            throw new NotFoundException("Такое занятие уже существует");
+        }
+        Lesson lesson = new Lesson();
+        LessonForm lessonForm = lessonFormRepository.findByFormName(lessonFormName);
+        Course course = courseRepository.findByCourseName(courseName);
+        if (lessonForm == null) {
+            lessonServiceLogger.error("Занятий такого типа нет");
+            throw new NotFoundException("Занятий такого типа нет");
+        }
+        if (course == null) {
+            lessonServiceLogger.error("Курса не существует");
+            throw new NotFoundException("Курса не существует");
+        }
+        lesson.setLessonName(lessonName);
+        lesson.setMondayDate(mondayDate);
+        lesson.setTuesdayDate(tuesdayDate);
+        lesson.setWednesdayDate(wednesdayDate);
+        lesson.setThursdayDate(thursdayDate);
+        lesson.setFridayDate(fridayDate);
+        lesson.setDescription(description);
+        lesson.setLessonForm(lessonForm);
+        lesson.setCost(cost);
+        lesson.setCourse(course);
+        lessonRepository.save(lesson);
+        lessonServiceLogger.info("end createLesson");
+        return true;
     }
 
     @Transactional
     public boolean editLessonName(String lessonName, String newLessonName, String courseName) throws NotFoundException {
         lessonServiceLogger.info("start editLessonName");
         Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
-        if(lesson == null) {
+        if (lesson == null) {
             lessonServiceLogger.error("Такого занятия не существует");
             throw new NotFoundException("Такого занятия не существует");
         } else {
@@ -121,7 +177,7 @@ public class LessonService {
     public boolean editLessonCost(String lessonName, Double cost, String courseName) throws NotFoundException {
         lessonServiceLogger.info("start editLessonCost");
         Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
-        if(lesson == null) {
+        if (lesson == null) {
             lessonServiceLogger.error("Такого занятия не существует");
             throw new NotFoundException("Такого занятия не существует");
         } else {
@@ -135,7 +191,7 @@ public class LessonService {
     public boolean deleteLesson(String lessonName, String courseName) throws NotFoundException {
         lessonServiceLogger.info("start deleteLesson");
         Lesson lesson = lessonRepository.findLessonByCourseNameAndLessonName(lessonName, courseName);
-        if(lesson == null) {
+        if (lesson == null) {
             lessonServiceLogger.error("Такого занятия не существует");
             throw new NotFoundException("Такого занятия не существует");
         } else {
@@ -149,7 +205,7 @@ public class LessonService {
     public boolean createLessonReview(String lessonDescription, String reviewText) throws NotFoundException {
         lessonServiceLogger.info("start createLessonReview");
         Lesson lesson = lessonRepository.findByDescription(lessonDescription);
-        if(lesson == null) {
+        if (lesson == null) {
             lessonServiceLogger.error("Такого занятия не существует");
             throw new NotFoundException("Такого занятия не существует");
         } else {

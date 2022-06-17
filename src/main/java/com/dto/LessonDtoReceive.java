@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class LessonDtoReceive {
     private String lessonName;
-    private String descripion;
+    private String description;
     private Double cost;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime mondayDate;

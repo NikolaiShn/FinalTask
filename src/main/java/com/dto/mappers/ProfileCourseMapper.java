@@ -13,15 +13,15 @@ import java.util.List;
 public interface ProfileCourseMapper {
 
     @IterableMapping(qualifiedByName = "dto_without_lessons")
-    List<ProfileCourseDto> coursesToProfileCourseDtos (List<Course> courses);
+    List<ProfileCourseDto> coursesToProfileCourseDtos(List<Course> courses);
     @IterableMapping(qualifiedByName = "without_lessons")
-    List<Course> profileCourseDtosToCourses (List<ProfileCourseDto> courseDtos);
+    List<Course> profileCourseDtosToCourses(List<ProfileCourseDto> courseDtos);
 
     @Named("dto_without_lessons")
     @Mapping(target = "lessons", ignore = true)
-    ProfileCourseDto courseToProfileCourseDto (Course course);
+    ProfileCourseDto courseToProfileCourseDto(Course course);
 
     @Named("without_lessons")
     @Mapping(target = "lessons", ignore = true)
-    Course profileCourseDtoToCourse (ProfileCourseDto courseDto);
+    Course profileCourseDtoToCourse(ProfileCourseDto courseDto);
 }

@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", uses = {KnowledgeDirectoryMapper.class, CourseMapper.class})
 public interface UserMapper {
 
-    UserDto userToUserDto (User user);
-    User userToUserDto (UserDto userDto);
+    UserDto userToUserDto(User user);
+    User userToUserDto(UserDto userDto);
 }

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class CreateLessonDto {
+    private String lessonName;
     private String courseName;
     private String lessonDescription;
     private Double cost;

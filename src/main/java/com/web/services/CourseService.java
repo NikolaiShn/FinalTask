@@ -60,7 +60,7 @@ public class CourseService {
     @Transactional
     public boolean createCourse(String courseName, Double cost, LocalDateTime startDate, LocalDateTime endDate) throws InvalidDateException {
         courseServiceLogger.info("start createCourse");
-        if(endDate.isBefore(startDate) && startDate.isBefore(LocalDateTime.now())) {
+        if (endDate.isBefore(startDate) && startDate.isBefore(LocalDateTime.now())) {
             courseServiceLogger.error("Дата не корректна");
             throw new InvalidDateException("Дата не корректна");
         } else {
@@ -74,7 +74,7 @@ public class CourseService {
     public boolean editCourseName(String oldName, String newName) throws NotFoundException {
         courseServiceLogger.info("start editCourseName");
         Course course = courseRepository.findByCourseName(oldName);
-        if(course == null) {
+        if (course == null) {
             courseServiceLogger.error("Такого курса не существует");
             throw new NotFoundException("Такого курса не существует");
         } else {
@@ -88,11 +88,11 @@ public class CourseService {
     public boolean editCourseCost(String courseName, Double cost) throws NotFoundException, IncorrectInputException {
         courseServiceLogger.info("start editCourseCost");
         Course course = courseRepository.findByCourseName(courseName);
-        if(cost <= 0) {
+        if (cost <= 0) {
             courseServiceLogger.error("Некорректная стоимость");
             throw new IncorrectInputException("Некорректная стоимость");
         }
-        if(course == null) {
+        if (course == null) {
             courseServiceLogger.error("Такого курса не существует");
             throw new NotFoundException("Такого курса не существует");
         } else {
@@ -106,7 +106,7 @@ public class CourseService {
     public boolean deleteCourse(String courseName) throws NotFoundException {
         courseServiceLogger.info("start deleteCourse");
         Course course = courseRepository.findByCourseName(courseName);
-        if(course == null) {
+        if (course == null) {
             courseServiceLogger.error("Такого курса не существует");
             throw new NotFoundException("Такого курса не существует");
         } else {
@@ -120,7 +120,7 @@ public class CourseService {
     public boolean createCourseReview(String courseName, String reviewText) throws NotFoundException {
         courseServiceLogger.info("start createCourseReview");
         Course course = courseRepository.findByCourseName(courseName);
-        if(course == null) {
+        if (course == null) {
             courseServiceLogger.error("Такого юзера не существует");
             throw new NotFoundException("Такого юзера не существует");
         } else {

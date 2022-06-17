@@ -4,6 +4,8 @@ import com.dto.KnowledgeDirectoryDto;
 import com.dto.SectionDto;
 import com.dto.ThemeDto;
 import com.exceptions.NotFoundException;
+import com.exceptions.SectionExistException;
+import com.exceptions.ThemeExistException;
 import com.web.services.KnowledgeDirectoryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,21 +72,19 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.deleteKnowledgeDirectory(knowledgeDirectoryName);
     }
 
-    //запретить не админу
     @PostMapping(value = "/knowledgeDirectory/createTheme", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public boolean createTheme(@RequestParam String knowledgeDirectoryName, @RequestParam String themeName) throws NotFoundException {
+    public boolean createTheme(@RequestParam String knowledgeDirectoryName, @RequestParam String themeName) throws NotFoundException, ThemeExistException {
         knowledgeDirectoryControllerControllerLogger.info("start createTheme");
         knowledgeDirectoryControllerControllerLogger.info("end createTheme");
         return knowledgeDirectoryService.addTheme(knowledgeDirectoryName, themeName);
     }
-    //запретить не админу
+
     @PostMapping(value = "/knowledgeDirectory/createSection", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public boolean createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException {
+    public boolean createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException, SectionExistException {
         knowledgeDirectoryControllerControllerLogger.info("start createSection");
         knowledgeDirectoryControllerControllerLogger.info("end createSection");
         return knowledgeDirectoryService.addSection(knowledgeDirectoryName, sectionName);
     }
-
 }

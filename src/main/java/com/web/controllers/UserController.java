@@ -41,7 +41,7 @@ public class UserController {
         userControllerLogger.info("start getCurrentUserAccessibleLessons");
         return userService.getCurrentUserAccessibleLessons();
     }
-
+    //по возврастанию
     @GetMapping(value = "/user/lessonsSortByCost", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<LessonDto> getCurrentUserAccessibleLessonsSortByCost() throws NotAuthenticatedException {
@@ -58,9 +58,9 @@ public class UserController {
 
     @PutMapping(value = "/user/subscribeLesson")
     @ResponseBody
-    public boolean subscribeToLesson(@RequestParam String lessonName) throws NotFoundException, NotAuthenticatedException {
+    public boolean subscribeToLesson(@RequestParam String lessonDescription) throws NotFoundException, NotAuthenticatedException {
         userControllerLogger.info("start subscribeToLesson");
-        return userService.subscribeToLesson(lessonName);
+        return userService.subscribeToLesson(lessonDescription);
     }
 
     @PostMapping(value = "/user/createCourse")
@@ -75,7 +75,7 @@ public class UserController {
     @ResponseBody
     public boolean createLesson(@RequestBody CreateLessonDto createLessonDto) throws NotAuthenticatedException, InvalidDateException, CourseExistException, LessonExistException {
         userControllerLogger.info("start createLesson");
-        return userService.createLesson(createLessonDto.getCourseName(), createLessonDto.getLessonDescription(), createLessonDto.getCost(), createLessonDto.getStartDate(), createLessonDto.getEndDate());
+        return userService.createLesson(createLessonDto.getLessonName(), createLessonDto.getCourseName(), createLessonDto.getLessonDescription(), createLessonDto.getCost(), createLessonDto.getStartDate(), createLessonDto.getEndDate());
     }
 
     @GetMapping(value = "/user/schedule")
@@ -87,10 +87,8 @@ public class UserController {
 
     @PutMapping(value = "/user/award")
     @ResponseBody
-    public boolean assignAward(@RequestBody AwardReceiveDto awardReceiveDto) throws NotFoundException {
+    public boolean assignAward(@RequestBody AwardReceiveDto awardReceiveDto) throws NotFoundException, IncorrectAssignAward {
         userControllerLogger.info("start assignAward");
         return userService.assignAward(awardReceiveDto.getAward(), awardReceiveDto.getLogin());
     }
-
-
 }

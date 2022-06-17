@@ -54,7 +54,7 @@ public class LessonController {
         lessonControllerLogger.info("start create");
         lessonControllerLogger.info("end create");
         return lessonService.createLesson(lessonDtoReceive.getCourseName(), lessonDtoReceive.getLessonName(),
-                                            lessonDtoReceive.getLessonForm(), lessonDtoReceive.getDescripion(),
+                                            lessonDtoReceive.getLessonForm(), lessonDtoReceive.getDescription(),
                                             lessonDtoReceive.getMondayDate(), lessonDtoReceive.getTuesdayDate(),
                                             lessonDtoReceive.getWednesdayDate(), lessonDtoReceive.getThursdayDate(),
                                             lessonDtoReceive.getFridayDate(), lessonDtoReceive.getCost());

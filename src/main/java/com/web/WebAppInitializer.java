@@ -8,13 +8,13 @@ import javax.servlet.Filter;
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     protected Class<?>[] getRootConfigClasses() {
-// AppConfig defines beans that would be in root-context.xml
         return new Class[] {WebSecurityConfig.class};
     }
+
     protected Class<?>[] getServletConfigClasses() {
-// WebConfig defines beans that would be in servlet.xml
         return null;
     }
+
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }

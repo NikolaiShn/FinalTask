@@ -2,6 +2,8 @@ import com.dto.KnowledgeDirectoryDto;
 import com.dto.SectionDto;
 import com.dto.ThemeDto;
 import com.exceptions.NotFoundException;
+import com.exceptions.SectionExistException;
+import com.exceptions.ThemeExistException;
 import com.model.KnowledgeDirectory;
 import com.web.dao.KnowledgeDirectoryRepository;
 import com.web.services.KnowledgeDirectoryService;
@@ -85,7 +87,7 @@ public class MockKnowledgeDirectoryService {
     }
 
     @Test
-    void addTheme() throws NotFoundException {
+    void addTheme() throws NotFoundException, ThemeExistException {
         String knowledgeDirectoryName = "name";
         String themeName = "name";
         KnowledgeDirectory knowledgeDirectory = new KnowledgeDirectory();
@@ -99,7 +101,7 @@ public class MockKnowledgeDirectoryService {
     }
 
     @Test
-    void addSection() throws NotFoundException {
+    void addSection() throws NotFoundException, SectionExistException {
         String knowledgeDirectoryName = "name";
         String sectionName = "name";
         KnowledgeDirectory knowledgeDirectory = new KnowledgeDirectory();

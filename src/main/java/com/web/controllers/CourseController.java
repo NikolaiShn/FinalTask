@@ -38,7 +38,7 @@ public class CourseController {
         courseControllerControllerLogger.info("end getAllCourses with cost");
         return courseService.findByCostGreaterThan(cost);
     }
-
+    //по убыванию
     @GetMapping(value = "/coursesSortByStartDate")
     @ResponseBody
     public List<CourseDto> getAllCoursesAllOrderByStartDateDesc() {
