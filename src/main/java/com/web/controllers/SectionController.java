@@ -35,6 +35,7 @@ public class SectionController {
      * Метод для создания раздела. Доступен пользователям с ролью ADMIN.
      * @param knowledgeDirectoryName - название справочника области знаний
      * @param sectionName - название раздела
+     * @throws NotFoundException - если справочника к которому будет относиться раздел не существует
      */
     @PostMapping(value = "/sections/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -49,6 +50,7 @@ public class SectionController {
      * @param oldName - текущее название раздела
      * @param newName - новое название раздела
      * @param knowledgeDirectoryName - название справочника области знаний
+     * @throws NotFoundException - если такого раздела не существует
      */
     @PutMapping(value = "/sections/editName")
     @ResponseBody
@@ -62,6 +64,7 @@ public class SectionController {
      * Метод для удаления раздела. Доступен пользователям с ролью ADMIN.
      * @param sectionName - название раздела
      * @param knowledgeDirectoryName - название справочника области знаний
+     * @throws NotFoundException - если такого раздела не существует
      */
     @DeleteMapping(value = "/sections/delete")
     @ResponseBody

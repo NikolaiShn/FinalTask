@@ -5,6 +5,7 @@ import com.dto.LessonDtoReceive;
 import com.dto.LessonReviewReceiveDto;
 import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
+import com.exceptions.LessonExistException;
 import com.exceptions.NotFoundException;
 import com.web.services.LessonService;
 import org.apache.logging.log4j.LogManager;
@@ -75,10 +76,14 @@ public class LessonController {
      *                  "lessonForm":"lessonForm";
      *                  "courseName":"courseName";
      *               }
+     * @throws InvalidDateException - если дата не корректна
+     * @throws IncorrectInputException - если стоимость не корректна
+     * @throws NotFoundException - если курса к которому будет относиться занятие не существует либо форма занятия не корректна
+     * @throws LessonExistException - если занятие с таким описанием уже существует
      */
     @PostMapping(value = "/lessons/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public boolean create(@RequestBody LessonDtoReceive lessonDtoReceive) throws InvalidDateException, IncorrectInputException, NotFoundException {
+    public boolean create(@RequestBody LessonDtoReceive lessonDtoReceive) throws InvalidDateException, IncorrectInputException, NotFoundException, LessonExistException {
         lessonControllerLogger.info("start create");
         lessonControllerLogger.info("end create");
         return lessonService.createLesson(lessonDtoReceive.getCourseName(), lessonDtoReceive.getLessonName(),
@@ -93,6 +98,7 @@ public class LessonController {
      * @param oldName - текущее название занятия
      * @param newName - новое название занятия
      * @param courseName - название курса к которому относится занятие
+     * @throws NotFoundException - если такого занятия не существует
      */
     @PutMapping(value = "/lessons/editName")
     @ResponseBody
@@ -107,6 +113,7 @@ public class LessonController {
      * @param lessonName - текущее название занятия
      * @param newCost - новая стоимость занятия
      * @param courseName - название курса к которому относится занятие
+     * @throws NotFoundException - если такого занятия не существует
      */
     @PutMapping(value = "/lessons/editCost")
     @ResponseBody
@@ -120,6 +127,7 @@ public class LessonController {
      * Метод для удаления занятия из бд. Доступен пользователям с ролью ADMIN.
      * @param lessonName - текущее название занятия
      * @param courseName - название курса к которому относится занятие
+     * @throws NotFoundException - если такого занятия не существует
      */
     @DeleteMapping(value = "/lessons/delete")
     @ResponseBody
@@ -137,6 +145,7 @@ public class LessonController {
      *                   "lessonDescription":"lessonDescription",
      *                   "reviewText":"reviewText"
      *               }
+     * @throws NotFoundException - если такого занятия не существует
      */
     @PostMapping(value = "/lessons/createReview")
     @ResponseBody

@@ -109,7 +109,7 @@ public class MockUserService {
     }
 
     @Test
-    void subscribeToCourse() throws NotFoundException, NotAuthenticatedException, CourseExistException {
+    void subscribeToCourse() throws NotFoundException, NotAuthenticatedException, CourseExistException, CourseSubscribeException {
         String login = "login";
         String courseName = "courseName";
         User user = new User();
@@ -125,7 +125,7 @@ public class MockUserService {
     }
 
     @Test
-    void subscribeToLesson() throws NotFoundException, NotAuthenticatedException {
+    void subscribeToLesson() throws NotFoundException, NotAuthenticatedException, LessonSubscribeException {
         String login = "login";
         String courseName = "courseName";
         String description = "best lesson";

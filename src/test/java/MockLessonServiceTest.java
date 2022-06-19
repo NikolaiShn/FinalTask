@@ -1,6 +1,7 @@
 import com.dto.LessonDto;
 import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
+import com.exceptions.LessonExistException;
 import com.exceptions.NotFoundException;
 import com.model.Course;
 import com.model.Lesson;
@@ -68,7 +69,7 @@ public class MockLessonServiceTest {
     }
 
     @Test
-    void createLesson() throws InvalidDateException, NotFoundException, IncorrectInputException {
+    void createLesson() throws InvalidDateException, NotFoundException, IncorrectInputException, LessonExistException {
         String lessonForm = "индивидуальное";
         String courseName = "courseName";
         String description = "тест";

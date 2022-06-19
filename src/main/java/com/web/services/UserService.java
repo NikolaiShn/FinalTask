@@ -174,7 +174,7 @@ public class UserService {
 
     //работает только на аутентифицированных пользователей
     @Transactional
-    public boolean subscribeToCourse(String courseName) throws NotFoundException, NotAuthenticatedException, CourseExistException {
+    public boolean subscribeToCourse(String courseName) throws NotFoundException, NotAuthenticatedException, CourseSubscribeException {
         userServiceLogger.info("start subscribeToCourse ");
         String login = authenticationFacade.getAuthentication().getName();
         if (login == null) {
@@ -190,7 +190,7 @@ public class UserService {
             List<Course> userCourses = user.getCourses();
             if (userCourses.contains(course)) {
                 userServiceLogger.error("На данный курс вы уже подписаны");
-                throw new CourseExistException("На данный курс вы уже подписаны");
+                throw new CourseSubscribeException("На данный курс вы уже подписаны");
             } else {
                 userCourses.add(course);
                 user.setCourses(userCourses);
@@ -203,7 +203,7 @@ public class UserService {
 
     //работает только на аутентифицированных пользователей и сразу подписывает на все занятия
     @Transactional
-    public boolean subscribeToLesson(String description) throws NotFoundException, NotAuthenticatedException {
+    public boolean subscribeToLesson(String description) throws NotFoundException, NotAuthenticatedException, LessonSubscribeException {
         userServiceLogger.info("start subscribeToLesson ");
         String login = authenticationFacade.getAuthentication().getName();
         if (login == null) {
@@ -220,7 +220,7 @@ public class UserService {
         List<Course> userCourses = user.getCourses();
             if (userCourses.contains(course)) {
                 userServiceLogger.error("Такое занятие уже есть");
-                throw new NotFoundException("Такое занятие уже есть");
+                throw new LessonSubscribeException("Такое занятие уже есть");
             } else {
                 userCourses.add(course);
                 user.setCourses(userCourses);

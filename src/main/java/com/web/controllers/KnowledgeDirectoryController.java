@@ -59,7 +59,7 @@ public class KnowledgeDirectoryController {
 
     /**
      * Метод для создания справочника областей знаний. Доступен пользователям с ролью ADMIN.
-     * @param knowledgeDirectoryName название справочника областей знаний
+     * @param knowledgeDirectoryName название справочника области знаний
      */
     @PostMapping(value = "/knowledgeDirectory/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -71,8 +71,9 @@ public class KnowledgeDirectoryController {
 
     /**
      * Метод для изменения названия справочника областей знаний. Доступен пользователям с ролью ADMIN.
-     * @param oldName текущее название справочника областей знаний
-     * @param newName новое название справочника областей знаний
+     * @param oldName текущее название справочника области знаний
+     * @param newName новое название справочника области знаний
+     * @throws NotFoundException - если справочника области знаний с таким именем не найдено
      */
     @PutMapping(value = "/knowledgeDirectory/editName")
     @ResponseBody
@@ -84,7 +85,8 @@ public class KnowledgeDirectoryController {
 
     /**
      * Метод удаления справочника областей знаний из бд. Доступен пользователям с ролью ADMIN.
-     * @param knowledgeDirectoryName название справочника областей знаний
+     * @param knowledgeDirectoryName название справочника области знаний
+     * @throws NotFoundException - если справочника области знаний с таким именем не найдено
      */
     @DeleteMapping(value = "/knowledgeDirectory/delete")
     @ResponseBody
@@ -96,8 +98,10 @@ public class KnowledgeDirectoryController {
 
     /**
      * Метод добавления темы в справочник областей знаний. Доступен пользователям с ролью ADMIN.
-     * @param knowledgeDirectoryName название справочника областей знаний
+     * @param knowledgeDirectoryName название справочника области знаний
      * @param themeName название темы
+     * @throws NotFoundException - если справочника области знаний с таким именем не найдено
+     * @throws ThemeExistException - если тема в справочнике существует
      */
     @PostMapping(value = "/knowledgeDirectory/createTheme", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -109,8 +113,10 @@ public class KnowledgeDirectoryController {
 
     /**
      * Метод добавления раздела в справочник областей знаний. Доступен пользователям с ролью ADMIN.
-     * @param knowledgeDirectoryName название справочника областей знаний
+     * @param knowledgeDirectoryName название справочника области знаний
      * @param sectionName название раздела
+     * @throws NotFoundException - если справочника области знаний с таким именем не найдено
+     * @throws SectionExistException - если раздел в справочнике существует
      */
     @PostMapping(value = "/knowledgeDirectory/createSection", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

@@ -80,6 +80,7 @@ public class CourseController {
      *                  "startDate":"2022-02-02 12:00:00",
      *                  "endDate":"2022-03-02 12:00:00"
      *               }
+     * @throws InvalidDateException - если дата не корректна
      */
     @PostMapping(value = "/course/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -93,6 +94,7 @@ public class CourseController {
      * Метод для изменения имени курса. Доступен пользователям с ролью ADMIN.
      * @param oldName - текущее название курса
      * @param newName - новое название курса
+     * @throws NotFoundException - если курса с таким именем не найдено
      */
     @PutMapping(value = "/course/editName")
     @ResponseBody
@@ -106,6 +108,8 @@ public class CourseController {
      * Метод для изменения стоимости курса. Доступен пользователям с ролью ADMIN.
      * @param courseName - текущее название курса
      * @param newCost - новая стоимость
+     * @throws NotFoundException - если курса с таким именем не найдено
+     * @throws IncorrectInputException - если новая стоимость отрицательная
      */
     @PutMapping(value = "/course/editCost")
     @ResponseBody
@@ -118,6 +122,7 @@ public class CourseController {
     /**
      * Метод для удаления курса из бд. Доступен пользователям с ролью ADMIN.
      * @param courseName - текущее название курса
+     * @throws NotFoundException - если курса с таким именем не найдено
      */
     @DeleteMapping(value = "/course/delete")
     @ResponseBody
@@ -131,6 +136,7 @@ public class CourseController {
      * Метод для создания отзыва о курсе. Доступен аутентифицированным пользователям.
      * @param courseName - текущее название курса
      * @param reviewText - текст отзыва
+     * @throws NotFoundException - если курса с таким именем не найдено
      */
     @PostMapping(value = "/course/createReview")
     @ResponseBody

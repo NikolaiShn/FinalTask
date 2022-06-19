@@ -4,6 +4,7 @@ import com.dto.LessonDto;
 import com.dto.mappers.LessonMapper;
 import com.exceptions.IncorrectInputException;
 import com.exceptions.InvalidDateException;
+import com.exceptions.LessonExistException;
 import com.exceptions.NotFoundException;
 import com.model.*;
 import com.web.dao.CourseRepository;
@@ -59,7 +60,7 @@ public class LessonService {
     public boolean createLesson(String courseName, String lessonName, String lessonFormName, String description,
                                 LocalDateTime mondayDate, LocalDateTime tuesdayDate,
                                 LocalDateTime wednesdayDate, LocalDateTime thursdayDate,
-                                LocalDateTime fridayDate, Double cost) throws InvalidDateException, IncorrectInputException, NotFoundException {
+                                LocalDateTime fridayDate, Double cost) throws InvalidDateException, IncorrectInputException, NotFoundException, LessonExistException {
         lessonServiceLogger.info("start createLesson");
         if (cost <= 0) {
             lessonServiceLogger.error("Некорректная стоимость");
@@ -131,7 +132,7 @@ public class LessonService {
         Lesson lessonCheck = lessonRepository.findByDescription(description);
         if (lessonCheck != null) {
             lessonServiceLogger.error("Такое занятие существует");
-            throw new NotFoundException("Такое занятие уже существует");
+            throw new LessonExistException("Такое занятие уже существует");
         }
         Lesson lesson = new Lesson();
         LessonForm lessonForm = lessonFormRepository.findByFormName(lessonFormName);

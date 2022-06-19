@@ -35,6 +35,7 @@ public class ThemeController {
      * Метод для создания темы. Доступен пользователям с ролью ADMIN.
      * @param knowledgeDirectoryName - название справочника области знаний
      * @param themeName - название темы
+     * @throws NotFoundException - если справочника к которому будет оноситься тема не существует
      */
     @PostMapping(value = "/themes/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -49,6 +50,7 @@ public class ThemeController {
      * @param oldName - текущее название темы
      * @param newName - новое название темы
      * @param knowledgeDirectoryName - имя справочника области знаний
+     * @throws NotFoundException - если такой темы не существует
      */
     @PutMapping(value = "/themes/editName")
     @ResponseBody
@@ -62,6 +64,7 @@ public class ThemeController {
      * Метод для удаления темы. Доступен пользователям с ролью ADMIN.
      * @param themeName - название темы
      * @param knowledgeDirectoryName - имя справочника области знаний
+     * @throws NotFoundException - если такой темы не существует
      */
     @DeleteMapping(value = "/themes/delete")
     @ResponseBody

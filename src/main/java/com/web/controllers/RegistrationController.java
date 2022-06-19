@@ -46,6 +46,8 @@ public class RegistrationController {
      * @param role - название роли(бывает 2-х типов ADMIN, USER)
      * @param name - имя пользователя
      * @param lastName - фамилия пользователя
+     * @throws UserExistException - если такой пользователь уже существует
+     * @throws RoleNotExistException - если указан не верный тип роли
      */
     @PostMapping(value = "/registration", produces = MediaType.APPLICATION_JSON_VALUE)
     public String registration(@ModelAttribute("username") String username, @ModelAttribute("password") String password, @ModelAttribute("role") String role, @ModelAttribute("name") String name, @ModelAttribute("lastName") String lastName) throws UserExistException, RoleNotExistException {
