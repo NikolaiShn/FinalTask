@@ -24,6 +24,9 @@ public class KnowledgeDirectoryController {
     @Autowired
     private KnowledgeDirectoryService knowledgeDirectoryService;
 
+    /**
+     * Метод для просмотра справочников областей знаний.
+     */
     @GetMapping(value = "/knowledgeDirectories", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<KnowledgeDirectoryDto> getAllKnowledgeDirectories() {
@@ -32,6 +35,9 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.getAllKnowledgeDirectories();
     }
 
+    /**
+     * Метод для просмотра всех тем справочников областей знаний.
+     */
     @GetMapping(value = "/knowledgeDirectory/themes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<ThemeDto> getAllThemesKnowledgeDirectories(@RequestParam String knowledgeDirectoryName) {
@@ -40,6 +46,9 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.findKnowledgeDirectoryThemes(knowledgeDirectoryName);
     }
 
+    /**
+     * Метод для просмотра всех разделов справочников областей знаний.
+     */
     @GetMapping(value = "/knowledgeDirectory/sections", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<SectionDto> getAllSectionsKnowledgeDirectories(@RequestParam String knowledgeDirectoryName) {
@@ -48,6 +57,10 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.findKnowledgeDirectorySections(knowledgeDirectoryName);
     }
 
+    /**
+     * Метод для создания справочника областей знаний. Доступен пользователям с ролью ADMIN.
+     * @param knowledgeDirectoryName название справочника областей знаний
+     */
     @PostMapping(value = "/knowledgeDirectory/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean createKnowledgeDirectory(@RequestParam String knowledgeDirectoryName) {
@@ -56,6 +69,11 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.createKnowLedgeDirectory(knowledgeDirectoryName);
     }
 
+    /**
+     * Метод для изменения названия справочника областей знаний. Доступен пользователям с ролью ADMIN.
+     * @param oldName текущее название справочника областей знаний
+     * @param newName новое название справочника областей знаний
+     */
     @PutMapping(value = "/knowledgeDirectory/editName")
     @ResponseBody
     public boolean editKnowledgeDirectory(@RequestParam String oldName, @RequestParam String newName) throws NotFoundException {
@@ -64,6 +82,10 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.editKnowledgeDirectoryName(newName, oldName);
     }
 
+    /**
+     * Метод удаления справочника областей знаний из бд. Доступен пользователям с ролью ADMIN.
+     * @param knowledgeDirectoryName название справочника областей знаний
+     */
     @DeleteMapping(value = "/knowledgeDirectory/delete")
     @ResponseBody
     public boolean deleteKnowledgeDirectory(@RequestParam String knowledgeDirectoryName) throws NotFoundException {
@@ -72,6 +94,11 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.deleteKnowledgeDirectory(knowledgeDirectoryName);
     }
 
+    /**
+     * Метод добавления темы в справочник областей знаний. Доступен пользователям с ролью ADMIN.
+     * @param knowledgeDirectoryName название справочника областей знаний
+     * @param themeName название темы
+     */
     @PostMapping(value = "/knowledgeDirectory/createTheme", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean createTheme(@RequestParam String knowledgeDirectoryName, @RequestParam String themeName) throws NotFoundException, ThemeExistException {
@@ -80,6 +107,11 @@ public class KnowledgeDirectoryController {
         return knowledgeDirectoryService.addTheme(knowledgeDirectoryName, themeName);
     }
 
+    /**
+     * Метод добавления раздела в справочник областей знаний. Доступен пользователям с ролью ADMIN.
+     * @param knowledgeDirectoryName название справочника областей знаний
+     * @param sectionName название раздела
+     */
     @PostMapping(value = "/knowledgeDirectory/createSection", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException, SectionExistException {

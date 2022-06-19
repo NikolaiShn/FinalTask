@@ -23,6 +23,9 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    /**
+     * @return возвращает все курсы для просмотра пользователям
+     */
     @GetMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<CourseDto> getAllCourses() {
@@ -31,6 +34,10 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
+    /**
+     * @param cost граница стоимости курсов
+     * @return возвращает все курсы стоимостью выше чем cost
+     */
     @GetMapping(value = "/coursesCostGreater/{cost}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<CourseDto> getAllCourses(@PathVariable("cost") Double cost) {
@@ -38,7 +45,11 @@ public class CourseController {
         courseControllerControllerLogger.info("end getAllCourses with cost");
         return courseService.findByCostGreaterThan(cost);
     }
-    //по убыванию
+
+    /**
+     * @return возвращает все курсы отсортированные по убыванию значения startDate
+     *         для просмотра пользователям
+     */
     @GetMapping(value = "/coursesSortByStartDate")
     @ResponseBody
     public List<CourseDto> getAllCoursesAllOrderByStartDateDesc() {
@@ -47,6 +58,10 @@ public class CourseController {
         return courseService.getAllCoursesAllOrderByStartDateDesc();
     }
 
+    /**
+     * @return возвращает все курсы отсортированные по убыванию значения endDate
+     *         для просмотра пользователям
+     */
     @GetMapping(value = "/coursesSortByEndDate")
     @ResponseBody
     public List<CourseDto> getAllCoursesAllOrderByEndDateDesc() {
@@ -55,6 +70,17 @@ public class CourseController {
         return courseService.getAllCoursesAllOrderByEndDateDesc();
     }
 
+    /**
+     * Метод для добавления курса в бд. Доступен пользователям с ролью ADMIN.
+     * @param course содерит параметры необходимые для создания курса.
+     *               Пример описания json:
+     *               {
+     *                  "courseName":"имя курса",
+     *                  "cost":"50.5",
+     *                  "startDate":"2022-02-02 12:00:00",
+     *                  "endDate":"2022-03-02 12:00:00"
+     *               }
+     */
     @PostMapping(value = "/course/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean create(@RequestBody CourseDtoReceive course) throws InvalidDateException {
@@ -63,6 +89,11 @@ public class CourseController {
         return courseService.createCourse(course.getCourseName(), course.getCost(), course.getStartDate(), course.getEndDate());
     }
 
+    /**
+     * Метод для изменения имени курса. Доступен пользователям с ролью ADMIN.
+     * @param oldName - текущее название курса
+     * @param newName - новое название курса
+     */
     @PutMapping(value = "/course/editName")
     @ResponseBody
     public boolean editCourseName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName) throws NotFoundException {
@@ -71,6 +102,11 @@ public class CourseController {
         return courseService.editCourseName(oldName, newName);
     }
 
+    /**
+     * Метод для изменения стоимости курса. Доступен пользователям с ролью ADMIN.
+     * @param courseName - текущее название курса
+     * @param newCost - новая стоимость
+     */
     @PutMapping(value = "/course/editCost")
     @ResponseBody
     public boolean editCourseCost(@RequestParam("courseName") String courseName, @RequestParam("newCost") Double newCost) throws NotFoundException, IncorrectInputException {
@@ -79,6 +115,10 @@ public class CourseController {
         return courseService.editCourseCost(courseName, newCost);
     }
 
+    /**
+     * Метод для удаления курса из бд. Доступен пользователям с ролью ADMIN.
+     * @param courseName - текущее название курса
+     */
     @DeleteMapping(value = "/course/delete")
     @ResponseBody
     public boolean deleteCourse(@RequestParam("courseName") String courseName) throws NotFoundException {
@@ -87,6 +127,11 @@ public class CourseController {
         return courseService.deleteCourse(courseName);
     }
 
+    /**
+     * Метод для создания отзыва о курсе. Доступен аутентифицированным пользователям.
+     * @param courseName - текущее название курса
+     * @param reviewText - текст отзыва
+     */
     @PostMapping(value = "/course/createReview")
     @ResponseBody
     public boolean createCourseReview(@RequestParam("courseName") String courseName, @RequestParam("reviewText") String reviewText) throws NotFoundException {

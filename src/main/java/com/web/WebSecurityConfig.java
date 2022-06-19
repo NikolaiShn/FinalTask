@@ -39,8 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.sessionManagement().sessionFixation().migrateSession();
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/course/create", "/course/editName", "/course/editCost", "/course/delete", "/course/createReview",
-                        "/lessons/create", "/lessons/editName", "/lessons/editCost", "/lessons/delete", "/lessons/createReview",
+                .antMatchers("/course/create", "/course/editName", "/course/editCost", "/course/delete",
+                        "/lessons/create", "/lessons/editName", "/lessons/editCost", "/lessons/delete",
                         "/sections/create", "/sections/editName", "/sections/delete",
                         "/themes/create", "/themes/editName", "/themes/delete",
                         "/knowledgeDirectory/create", "/knowledgeDirectory/editName", "/knowledgeDirectory/delete", "/knowledgeDirectory/createTheme", "/knowledgeDirectory/createSection")
@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profile", "/profile/changeName", "/profile/changeLastName",
                         "/user/schedule", "/user/createLesson", "/user/createCourse", "/user/subscribeLesson",
                         "/user/subscribeCourse", "/user/lessonsSortByCost", "/user/lessons",
-                        "/user/coursesSortByCost", "/user/courses").authenticated()
+                        "/user/coursesSortByCost", "/user/courses", "/course/createReview", "/lessons/createReview").authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/")
                 .and()

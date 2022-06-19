@@ -24,6 +24,9 @@ public class LessonController {
     @Autowired
     private LessonService lessonService;
 
+    /**
+     * Метод для просмотра занятий.
+     */
     @GetMapping(value = "/lessons", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<LessonDto> getAllLessons() {
@@ -32,6 +35,10 @@ public class LessonController {
         return lessonService.getAllLessons();
     }
 
+    /**
+     * Метод для просмотра занятий, у которых форма занятия lessonForm.
+     * @param lessonForm - форма занятия
+     */
     @GetMapping(value = "/lessons/{lessonForm}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<LessonDto> getByLessonForm(@PathVariable("lessonForm") String lessonForm) {
@@ -40,6 +47,10 @@ public class LessonController {
         return lessonService.findByLessonForm(lessonForm);
     }
 
+    /**
+     * Метод для просмотра всех занятий курса.
+     * @param courseName - название курса
+     */
     @GetMapping(value = "/lessons", params = {"courseName"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<LessonDto> getLessonsByCourse(@RequestParam String courseName) {
@@ -48,6 +59,23 @@ public class LessonController {
         return lessonService.getLessonsByCourse(courseName);
     }
 
+    /**
+     * Метод для создания занятия. Доступен пользователям с ролью ADMIN.
+     * @param lessonDtoReceive - содержит параметры необходимые для создания занятия
+     *               Пример описания json:
+     *               {
+     *                  "lessonName":"lessonName",
+     *                  "description":"description",
+     *                  "cost":"45",
+     *                  "mondayDate":"2022-06-07:12:00:00",
+     *                  "tuesdayDate":2022-06-08:12:00:00",
+     *                  "wednesdayDate":2022-06-09:12:00:00",
+     *                  "thursdayDate":2022-06-10:12:00:00",
+     *                  "fridayDate":"2022-06-11:12:00:00"
+     *                  "lessonForm":"lessonForm";
+     *                  "courseName":"courseName";
+     *               }
+     */
     @PostMapping(value = "/lessons/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean create(@RequestBody LessonDtoReceive lessonDtoReceive) throws InvalidDateException, IncorrectInputException, NotFoundException {
@@ -60,6 +88,12 @@ public class LessonController {
                                             lessonDtoReceive.getFridayDate(), lessonDtoReceive.getCost());
     }
 
+    /**
+     * Метод для создания занятия. Доступен пользователям с ролью ADMIN.
+     * @param oldName - текущее название занятия
+     * @param newName - новое название занятия
+     * @param courseName - название курса к которому относится занятие
+     */
     @PutMapping(value = "/lessons/editName")
     @ResponseBody
     public boolean editLessonDescription(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("courseName") String courseName) throws NotFoundException {
@@ -68,6 +102,12 @@ public class LessonController {
         return lessonService.editLessonName(oldName, newName, courseName);
     }
 
+    /**
+     * Метод для изменения стоимости занятия. Доступен пользователям с ролью ADMIN.
+     * @param lessonName - текущее название занятия
+     * @param newCost - новая стоимость занятия
+     * @param courseName - название курса к которому относится занятие
+     */
     @PutMapping(value = "/lessons/editCost")
     @ResponseBody
     public boolean editLessonCost(@RequestParam("lessonName") String lessonName, @RequestParam("newCost") Double newCost, @RequestParam("courseName") String courseName) throws NotFoundException {
@@ -76,6 +116,11 @@ public class LessonController {
         return lessonService.editLessonCost(lessonName, newCost, courseName);
     }
 
+    /**
+     * Метод для удаления занятия из бд. Доступен пользователям с ролью ADMIN.
+     * @param lessonName - текущее название занятия
+     * @param courseName - название курса к которому относится занятие
+     */
     @DeleteMapping(value = "/lessons/delete")
     @ResponseBody
     public boolean deleteLesson(@RequestParam("lessonName") String lessonName, @RequestParam("courseName") String courseName) throws NotFoundException {
@@ -84,6 +129,15 @@ public class LessonController {
         return lessonService.deleteLesson(lessonName, courseName);
     }
 
+    /**
+     * Метод для создания комментария к занятию.
+     * @param lessonReviewReceiveDto - содержит параметры необходимые для создания комментария к занятию
+     *               Пример описания json:
+     *               {
+     *                   "lessonDescription":"lessonDescription",
+     *                   "reviewText":"reviewText"
+     *               }
+     */
     @PostMapping(value = "/lessons/createReview")
     @ResponseBody
     public boolean createLessonReview(@RequestBody LessonReviewReceiveDto lessonReviewReceiveDto) throws NotFoundException {

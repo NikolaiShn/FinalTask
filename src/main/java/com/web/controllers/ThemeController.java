@@ -20,6 +20,9 @@ public class ThemeController {
     @Autowired
     private ThemeService themeService;
 
+    /**
+     * Метод возврщающий все темы справочников областей знаний.
+     */
     @GetMapping(value = "/themes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<ThemeDto> getAllThemes() {
@@ -28,6 +31,11 @@ public class ThemeController {
         return themeService.getAllThemes();
     }
 
+    /**
+     * Метод для создания темы. Доступен пользователям с ролью ADMIN.
+     * @param knowledgeDirectoryName - название справочника области знаний
+     * @param themeName - название темы
+     */
     @PostMapping(value = "/themes/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean createTheme(@RequestParam String knowledgeDirectoryName, @RequestParam String themeName) throws NotFoundException {
@@ -36,6 +44,12 @@ public class ThemeController {
         return themeService.createTheme(knowledgeDirectoryName, themeName);
     }
 
+    /**
+     * Метод для изменения имени темы. Доступен пользователям с ролью ADMIN.
+     * @param oldName - текущее название темы
+     * @param newName - новое название темы
+     * @param knowledgeDirectoryName - имя справочника области знаний
+     */
     @PutMapping(value = "/themes/editName")
     @ResponseBody
     public boolean editThemeName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
@@ -44,6 +58,11 @@ public class ThemeController {
         return themeService.editThemeName(oldName, newName, knowledgeDirectoryName);
     }
 
+    /**
+     * Метод для удаления темы. Доступен пользователям с ролью ADMIN.
+     * @param themeName - название темы
+     * @param knowledgeDirectoryName - имя справочника области знаний
+     */
     @DeleteMapping(value = "/themes/delete")
     @ResponseBody
     public boolean deleteTheme(@RequestParam String themeName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {

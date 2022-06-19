@@ -20,6 +20,9 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
+    /**
+     * Метод для просмотра профиля пользователя. Доступен аутентифицированным пользователям
+     */
     @GetMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ProfileDto getProfile() {
@@ -27,7 +30,9 @@ public class ProfileController {
         profileControllerLogger.info("end getProfile");
         return profileService.getProfile();
     }
-
+    /**
+     * Метод для изменения имени пользователя. Доступен аутентифицированным пользователям
+     */
     @PutMapping("/profile/changeName")
     @ResponseBody
     public boolean changeProfileUserName(@RequestParam String newName) {
@@ -35,7 +40,9 @@ public class ProfileController {
         profileControllerLogger.info("end changeProfileUserName");
         return profileService.changeProfileUserName(newName);
     }
-
+    /**
+     * Метод для изменения фамилии пользователя. Доступен аутентифицированным пользователям
+     */
     @PutMapping("/profile/changeLastName")
     @ResponseBody
     public boolean changeProfileUserLastName(@RequestParam String newLastName) {

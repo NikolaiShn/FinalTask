@@ -20,7 +20,9 @@ public class SectionController {
     @Autowired
     private SectionService sectionService;
 
-
+    /**
+     * Метод возврщающий все разделы справочников областей знаний.
+     */
     @GetMapping(value = "/sections", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<SectionDto> getAllSections() {
@@ -29,6 +31,11 @@ public class SectionController {
         return sectionService.getAllSections();
     }
 
+    /**
+     * Метод для создания раздела. Доступен пользователям с ролью ADMIN.
+     * @param knowledgeDirectoryName - название справочника области знаний
+     * @param sectionName - название раздела
+     */
     @PostMapping(value = "/sections/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean createSection(@RequestParam String knowledgeDirectoryName, @RequestParam String sectionName) throws NotFoundException {
@@ -37,6 +44,12 @@ public class SectionController {
         return sectionService.createSection(knowledgeDirectoryName, sectionName);
     }
 
+    /**
+     * Метод для изменения имени раздела. Доступен пользователям с ролью ADMIN.
+     * @param oldName - текущее название раздела
+     * @param newName - новое название раздела
+     * @param knowledgeDirectoryName - название справочника области знаний
+     */
     @PutMapping(value = "/sections/editName")
     @ResponseBody
     public boolean editSectionName(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
@@ -45,6 +58,11 @@ public class SectionController {
         return sectionService.editSectionName(oldName, newName, knowledgeDirectoryName);
     }
 
+    /**
+     * Метод для удаления раздела. Доступен пользователям с ролью ADMIN.
+     * @param sectionName - название раздела
+     * @param knowledgeDirectoryName - название справочника области знаний
+     */
     @DeleteMapping(value = "/sections/delete")
     @ResponseBody
     public boolean deleteSection(@RequestParam("sectionName") String sectionName, @RequestParam("knowledgeDirectoryName") String knowledgeDirectoryName) throws NotFoundException {
