@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Entity(name = "lessons_reviews")
-public class LessonReview implements Serializable {
+public class LessonReview {
     @Id
     @GeneratedValue
     private Long id;

@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "courses")
-public class Course implements Serializable {
+public class Course {
     @Id
     @GeneratedValue
     private Long id;

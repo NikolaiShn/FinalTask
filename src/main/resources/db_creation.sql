@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS ExchangeService CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS ExchangeService 
+CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE ExchangeService;
 
 CREATE TABLE IF NOT EXISTS Roles(
@@ -144,9 +145,9 @@ INSERT INTO Lessons_Form(form_name) VALUES ("индивидуальное");
 INSERT INTO Lessons_Form(form_name) VALUES ("групповое");
 
 INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (1, 1, "урок1", "датадата", '2022-06-05T12:00', '2022-06-05T12:00', '2022-06-05T12:00', '2022-06-05T12:00', '2022-06-05T12:00', 10.0);
-INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (2, 2, "урок2", "датадата", '2022-06-05T13:00', '2022-06-05T13:00', null, '2022-06-05T13:00', '2022-06-05T13:00', 11.0);
-INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (3, 2, "урок3", "датадата", '2022-06-05T14:00', null, '2022-06-05T14:00', '2022-06-05T14:00', '2022-06-05T14:00', 12.0);
-INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (3, 2, "урок4", "датадата", '2022-06-05T15:00', null, '2022-06-05T15:00', '2022-06-05T15:00', '2022-06-05T15:00', 13.0);
+INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (2, 2, "урок2", "дата", '2022-06-05T13:00', '2022-06-05T13:00', null, '2022-06-05T13:00', '2022-06-05T13:00', 11.0);
+INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (3, 2, "урок3", "тест Б", '2022-06-05T14:00', null, '2022-06-05T14:00', '2022-06-05T14:00', '2022-06-05T14:00', 12.0);
+INSERT INTO Lessons(course_id, lesson_form_id, lesson_name, description, monday_date, tuesday_date, wednesday_date, thursday_date, friday_date, cost) VALUES (3, 2, "урок4", "тест А", '2022-06-05T15:00', null, '2022-06-05T15:00', '2022-06-05T15:00', '2022-06-05T15:00', 13.0);
 
 INSERT INTO Lessons_Reviews(lesson_id, text) VALUES (1, "5 звёзд");
 INSERT INTO Lessons_Reviews(lesson_id, text) VALUES (2, "пушка");

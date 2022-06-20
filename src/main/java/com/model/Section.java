@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "sections")
-public class Section implements Serializable {
+public class Section {
     @Id
     @GeneratedValue
     private Long id;

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "knowledge_directories")
-public class KnowledgeDirectory implements Serializable {
+public class KnowledgeDirectory {
     @Id
     @GeneratedValue
     private Long id;

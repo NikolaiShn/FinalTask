@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "lessons_form")
-public class LessonForm implements Serializable {
+public class LessonForm {
     @Id
     private Long id;
     @Column(name = "form_name")

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "course_reviews")
-public class CourseReview implements Serializable {
+public class CourseReview {
     @Id
     @GeneratedValue
     private Long id;
