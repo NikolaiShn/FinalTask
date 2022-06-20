@@ -47,6 +47,7 @@ public class ThemeController {
 
     /**
      * Метод для изменения имени темы. Доступен пользователям с ролью ADMIN.
+     * Если имя темы одинаковое изменяет сразу все имена у всех тем.
      * @param oldName - текущее название темы
      * @param newName - новое название темы
      * @param knowledgeDirectoryName - имя справочника области знаний
@@ -62,6 +63,7 @@ public class ThemeController {
 
     /**
      * Метод для удаления темы. Доступен пользователям с ролью ADMIN.
+     * Если имя темы одинаковое удаляет сразу все темы с таким именем.
      * @param themeName - название темы
      * @param knowledgeDirectoryName - имя справочника области знаний
      * @throws NotFoundException - если такой темы не существует

@@ -51,7 +51,6 @@ public class SectionService {
         }
     }
 
-    //изменяет сразу все имена
     @Transactional
     public boolean editSectionName(String sectionName, String newSectionName, String knowledgeDirectoryName) throws NotFoundException {
         sectionServiceLogger.info("start editSectionName");
@@ -68,7 +67,6 @@ public class SectionService {
         }
     }
 
-    //если имя одинаковое удаляет сразу все
     @Transactional
     public boolean deleteSection(String sectionName, String knowledgeDirectoryName) throws NotFoundException {
         sectionServiceLogger.info("start deleteSection");

@@ -96,27 +96,27 @@ public class LessonService {
                                 daysSchedule.add(mondayDate);
                                 daysNumber.add(i);
                             }
-                          break;
+                         break;
                 case 1 : if (checkarr[i] == 1) {
                                 daysSchedule.add(tuesdayDate);
                                 daysNumber.add(i);
                             }
-                          break;
+                         break;
                 case 2 : if (checkarr[i] == 1) {
                                 daysSchedule.add(wednesdayDate);
                                 daysNumber.add(i);
                             }
-                          break;
+                         break;
                 case 3 : if (checkarr[i] == 1) {
                                 daysSchedule.add(thursdayDate);
                                 daysNumber.add(i);
                             }
-                          break;
+                         break;
                 case 4 : if (checkarr[i] == 1) {
                                 daysSchedule.add(fridayDate);
                                 daysNumber.add(i);
                             }
-                          break;
+                         break;
             }
         }
         for(int i = 0; i < daysSchedule.size(); i++) {

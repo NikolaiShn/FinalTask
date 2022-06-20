@@ -100,7 +100,6 @@ public class UserService {
         return courseMapper.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)));
     }
 
-    //сортировка по возврастанию
     @Transactional
     public List<CourseDto> getCurrentUserAccessibleCoursesSortByCost() throws NotAuthenticatedException {
         userServiceLogger.info("start getCurrentUserAccessibleCoursesSortByCost ");
@@ -113,7 +112,6 @@ public class UserService {
         return courseMapper.coursesToCourseDtos(userRepository.findCoursesByUserFetch(userRepository.findByLogin(login)).stream().sorted(Comparator.comparing(Course::getCost)).toList());
     }
 
-    //сортировка по возврастанию
     @Transactional
     public List<LessonDto> getCurrentUserAccessibleLessonsSortByCost() throws NotAuthenticatedException {
         userServiceLogger.info("start getCurrentUserAccessibleLessonsSortByCost ");
@@ -172,7 +170,6 @@ public class UserService {
         }
     }
 
-    //работает только на аутентифицированных пользователей
     @Transactional
     public boolean subscribeToCourse(String courseName) throws NotFoundException, NotAuthenticatedException, CourseSubscribeException {
         userServiceLogger.info("start subscribeToCourse ");
@@ -201,7 +198,6 @@ public class UserService {
         }
     }
 
-    //работает только на аутентифицированных пользователей и сразу подписывает на все занятия
     @Transactional
     public boolean subscribeToLesson(String description) throws NotFoundException, NotAuthenticatedException, LessonSubscribeException {
         userServiceLogger.info("start subscribeToLesson ");
@@ -259,8 +255,6 @@ public class UserService {
         }
     }
 
-    //имя курса будет соответствовать имени занятия, в занятии пустое время
-    //форма занятия по дефолту индивидуальное
     @Transactional
     public boolean createLesson(String lessonName, String courseName, String description, Double cost, LocalDateTime startDate, LocalDateTime endDate) throws InvalidDateException, NotAuthenticatedException, CourseExistException, LessonExistException {
         userServiceLogger.info("start createLesson ");
